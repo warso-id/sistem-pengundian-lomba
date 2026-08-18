@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Undian Lomba Video Konten · 18 spin</title>
+  <title>Undian Lomba Video Konten V5 · Modal Winner</title>
   <style>
     *{box-sizing:border-box}
     :root{--bg:#070b14;--card:#101827;--line:#24334a;--text:#f5f7fb;--muted:#9aa9bd;--accent:#48d7ff;--ok:#41e38a;--danger:#ff5277;--gold:#ffd35a;--violet:#b388ff}
@@ -20,7 +20,7 @@
     h1{font-size:clamp(28px,5vw,54px);margin:8px 0 4px}
     .sub{color:var(--muted);margin:0}
     .counter{font-size:13px;color:var(--muted);margin-top:16px}
-    .draw{min-height:260px;display:flex;align-items:center;justify-content:center;flex-direction:column;padding:25px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);position:relative;overflow:hidden}
+    .draw{min-height:220px;display:flex;align-items:center;justify-content:center;flex-direction:column;padding:25px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);position:relative;overflow:hidden}
     .draw::before{content:"";position:absolute;inset:-50%;background:conic-gradient(from 0deg,transparent,rgba(72,215,255,.06),transparent 25%);animation:drawSweep 5s linear infinite;pointer-events:none}
     @keyframes drawSweep{to{transform:rotate(360deg)}}
     .number{font-size:clamp(72px,15vw,170px);line-height:.9;font-weight:950;letter-spacing:-8px;text-shadow:0 0 40px rgba(72,215,255,.15);transition:transform .15s}
@@ -34,19 +34,6 @@
     button.secondary{background:#1a273a;color:#eaf1fb;border:1px solid #30445e;box-shadow:none}
     button.danger{background:var(--danger);color:white}
     button:disabled{opacity:.45;cursor:not-allowed}
-    .player{display:none;padding:18px;background:#05080e}
-    .player.show{display:block}
-    .video-wrap{position:relative;width:100%;aspect-ratio:16/9;background:#000;border-radius:15px;overflow:hidden}
-    .video-wrap iframe,.video-wrap video{position:absolute;inset:0;width:100%;height:100%;border:0}
-    .result{display:none;text-align:center;padding:26px 18px 34px;background:radial-gradient(circle at 50% 30%,rgba(255,211,90,.12),transparent 50%)}
-    .result.show{display:block;animation:resultIn .7s cubic-bezier(.17,.89,.32,1.28)}
-    .result .boom{font-size:64px;animation:boom .65s ease-out}
-    @keyframes boom{0%{transform:scale(.1);opacity:0}55%{transform:scale(1.25);opacity:1}100%{transform:scale(1)}}
-    @keyframes resultIn{0%{opacity:0;transform:scale(.72)}70%{opacity:1;transform:scale(1.04)}100%{transform:scale(1)}}
-    .result h2{font-size:clamp(32px,7vw,74px);margin:5px 0;color:var(--gold)}
-    .result .winner{font-size:clamp(25px,5vw,50px);font-weight:900;animation:winnerText .8s .15s both cubic-bezier(.17,.89,.32,1.28)}
-    .result .winner-theme{color:var(--muted);margin-top:8px}
-    @keyframes winnerText{from{opacity:0;transform:translateY(22px);filter:blur(8px)}to{opacity:1;transform:none;filter:none}}
     .table-card{margin-top:20px;padding:18px}
     table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:12px;border-bottom:1px solid var(--line);font-size:14px}th{color:var(--muted);font-size:12px;text-transform:uppercase}
     tr.active{background:rgba(72,215,255,.08)}
@@ -68,22 +55,45 @@
     .finish .logo-click{background:rgba(255,211,90,.10);border-color:rgba(255,211,90,.35)}
     @keyframes logoOrbit{to{transform:rotate(360deg)}}@keyframes spinBg{to{transform:rotate(-360deg)}}@keyframes logoFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}@keyframes logoPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.025)}}@keyframes clickPulse{0%,100%{box-shadow:0 0 0 rgba(72,215,255,0)}50%{box-shadow:0 0 30px rgba(72,215,255,.18)}}
 
-    /* ===== V5 VIDEO OVERLAY ===== */
-    #winnerVideoStage{display:none;position:fixed;inset:0;z-index:7000;background:rgba(2,5,10,.985);align-items:center;justify-content:center;padding:18px}
-    #winnerVideoStage.show{display:flex;animation:v4In .45s ease-out}
-    .v4-video-box{width:min(1180px,96vw);display:flex;flex-direction:column;gap:10px}
+    /* ===== WINNER MODAL (fixed di halaman utama) ===== */
+    #winnerModal{
+      display:none; position:fixed; inset:0; z-index:8000;
+      background:rgba(0,0,0,.85); backdrop-filter:blur(8px);
+      align-items:center; justify-content:center; padding:20px;
+    }
+    #winnerModal.show{display:flex; animation:modalIn .4s cubic-bezier(.17,.89,.32,1.28)}
+    @keyframes modalIn{from{opacity:0; transform:scale(.8)}to{opacity:1; transform:scale(1)}}
+    .winner-modal-box{
+      background:linear-gradient(145deg,#1a1f2e,#0b101c);
+      border:2px solid var(--gold); border-radius:24px;
+      padding:30px; max-width:700px; width:100%;
+      text-align:center; box-shadow:0 0 80px rgba(255,211,90,.25);
+      position:relative;
+    }
+    .winner-modal-box .boom{font-size:72px; animation:boom .65s ease-out}
+    .winner-modal-box h2{font-size:clamp(42px,10vw,80px); margin:10px 0; color:var(--gold); text-shadow:0 0 30px rgba(255,211,90,.5)}
+    .winner-modal-box .winner-name{font-size:clamp(28px,6vw,48px); font-weight:900; color:white}
+    .winner-modal-box .winner-theme{color:#cbd5e1; margin-top:10px; font-size:18px}
+    .winner-modal-box .modal-actions{display:flex; gap:12px; justify-content:center; margin-top:25px; flex-wrap:wrap}
+    .winner-modal-box .btn-play-video{background:var(--gold); color:#1a1a1a; font-weight:900; padding:14px 28px; border-radius:14px; cursor:pointer; border:none; font-size:16px; box-shadow:0 10px 30px rgba(255,211,90,.3)}
+    .winner-modal-box .btn-close-modal{background:#2a3446; color:white; border:1px solid #4a5a75; padding:14px 28px; border-radius:14px; cursor:pointer; font-weight:700}
+
+    /* ===== VIDEO OVERLAY (diatas modal winner) ===== */
+    #winnerVideoStage{display:none;position:fixed;inset:0;z-index:9000;background:rgba(0,0,0,.97);align-items:center;justify-content:center;padding:20px}
+    #winnerVideoStage.show{display:flex;animation:v4In .3s ease-out}
+    @keyframes v4In{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}
+    .v4-video-box{width:min(1100px,96vw);display:flex;flex-direction:column;gap:10px}
     .v4-video-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
-    .v4-video-label{font-size:13px;font-weight:900;letter-spacing:2px;color:var(--gold);text-transform:uppercase}
+    .v4-video-label{font-size:14px;font-weight:900;letter-spacing:2px;color:var(--gold);text-transform:uppercase}
     .v4-video-frame{width:100%;aspect-ratio:16/9;background:#000;border-radius:18px;overflow:hidden;border:1px solid #263953;box-shadow:0 0 90px rgba(72,215,255,.18)}
     .v4-video-frame iframe,.v4-video-frame video{width:100%;height:100%;display:block;border:0}
-    .v4-info{text-align:center;color:#eef6ff}
-    .v4-info strong{display:block;font-size:clamp(21px,3.5vw,36px)}
+    .v4-info{text-align:center;color:#eef6ff;margin-top:5px}
+    .v4-info strong{display:block;font-size:clamp(18px,3vw,28px)}
     .v4-info span{display:block;color:#91a4bb;margin-top:4px}
-    .v4-note{display:none;text-align:center;color:#b9c9da;font-size:12px}
+    .v4-note{display:none;text-align:center;color:#b9c9da;font-size:13px;margin-top:10px}
     .v4-note.show{display:block}
-    .v4-play{display:none;margin:0 auto}
+    .v4-play{display:none;margin:10px auto 0}
     .v4-play.show{display:block}
-    @keyframes v4In{from{opacity:0;transform:scale(.975)}to{opacity:1;transform:scale(1)}}
   </style>
   <script>
     (function(){
@@ -104,11 +114,26 @@
   </div>
 </div>
 
+<!-- WINNER MODAL -->
+<div id="winnerModal">
+  <div class="winner-modal-box">
+    <div class="boom">💥</div>
+    <h2 id="modalNumber">#—</h2>
+    <div class="winner-name" id="modalName">—</div>
+    <div class="winner-theme" id="modalTheme">—</div>
+    <div class="modal-actions">
+      <button class="btn-play-video" id="modalVideoBtn" onclick="playVideoFromModal()">🎬 PLAY VIDEO</button>
+      <button class="btn-close-modal" onclick="closeWinnerModal()">✕ TUTUP</button>
+    </div>
+  </div>
+</div>
+
+<!-- VIDEO OVERLAY -->
 <div id="winnerVideoStage" aria-hidden="true">
   <div class="v4-video-box">
     <div class="v4-video-head">
-      <div class="v4-video-label">🎬 VIDEO PESERTA TERPILIH (PUTAR SEKALI)</div>
-      <button class="secondary" onclick="closeWinnerVideo()">✕ TUTUP</button>
+      <div class="v4-video-label">🎬 VIDEO PESERTA TERPILIH</div>
+      <button class="secondary" onclick="closeVideoOnly()">✕ TUTUP VIDEO</button>
     </div>
     <div id="winnerVideoFrame" class="v4-video-frame"></div>
     <div id="v4Note" class="v4-note"></div>
@@ -135,7 +160,7 @@
     <div class="top">
       <div class="kicker">Video Content Competition</div>
       <h1>Pengundian Peserta V5</h1>
-      <p class="sub">18 pergantian otomatis · slow motion · video pemenang 1x</p>
+      <p class="sub">18 pergantian otomatis · modal winner · video 1x</p>
       <div class="counter" id="counter">Siap memulai</div>
     </div>
 
@@ -145,23 +170,10 @@
       <div id="theme" class="theme">Data diambil langsung dari Google Spreadsheet</div>
     </div>
 
-    <div id="result" class="result">
-      <div class="boom">💥</div>
-      <h2 id="resultNumber">#—</h2>
-      <div id="resultName" class="winner">—</div>
-      <div id="resultTheme" class="winner-theme">—</div>
-    </div>
-
     <div class="actions">
       <button id="playBtn" onclick="startDraw()">▶ PLAY / UNDI</button>
       <button id="stopBtn" class="danger" onclick="stopDraw()" disabled>■ STOP</button>
-      <button id="videoBtn" class="secondary" onclick="showWinnerVideo()" disabled>🎬 PLAY VIDEO UTUH</button>
       <button class="secondary" onclick="loadData()">↻ SINKRONKAN</button>
-    </div>
-
-    <div id="player" class="player">
-      <div id="videoWrap" class="video-wrap"></div>
-      <div class="hint">Video peserta terpilih</div>
     </div>
   </section>
 
@@ -181,8 +193,8 @@
   let isDrawing = false;
   let used = new Set();
   let lastSync = null;
-  let spinCount = 0;          // V5: hitungan pergantian otomatis
-  const MAX_SPIN = 18;       // 18 pergantian otomatis
+  let spinCount = 0;
+  const MAX_SPIN = 18;
 
   function decodeBase64Url(value){ try { return atob(value); } catch(e){ return ""; } }
   const GAS_URL = decodeBase64Url(GAS_URL_B64);
@@ -230,7 +242,6 @@
     document.getElementById("theme").textContent = p.theme || "—";
   }
 
-  /* ===== V5 CORE: 18 pergantian, lalu melambat & stop otomatis ===== */
   function startDraw(){
     if(isDrawing || participants.length===0) return;
     if(used.size >= participants.length){
@@ -238,43 +249,35 @@
       document.getElementById("counter").textContent = "Semua peserta sudah keluar — daftar di-reset.";
     }
 
-    document.getElementById("result").classList.remove("show");
-    document.getElementById("player").classList.remove("show");
-    document.getElementById("videoWrap").innerHTML = "";
-    document.getElementById("videoBtn").disabled = true;
+    document.getElementById("winnerModal").classList.remove("show");
+    document.getElementById("winnerVideoStage").classList.remove("show");
     document.getElementById("playBtn").disabled = true;
-    document.getElementById("stopBtn").disabled = true; // stop manual dinonaktifkan, otomatis
+    document.getElementById("stopBtn").disabled = true;
     document.getElementById("number").classList.add("spin");
     isDrawing = true;
     spinCount = 0;
 
-    // Dapatkan daftar peserta yang belum keluar
     const available = participants.filter(p=>!used.has(p.no));
-    let lastIndex = 0;
 
     timer = setInterval(()=>{
-      // pilih acak dari available untuk efek pergantian cepat
       const p = available[Math.floor(Math.random()*available.length)];
       setDisplay(p);
       spinCount++;
 
       if(spinCount >= MAX_SPIN){
-        // mulai fase melambat: hentikan interval cepat, ganti ke interval lambat
         clearInterval(timer);
         timer = setInterval(()=>{
-          // masih tampilkan pergantian lambat
           const slowPick = available[Math.floor(Math.random()*available.length)];
           setDisplay(slowPick);
-          // jika sudah beberapa kali perlambatan, berhenti total
           if(spinCount > MAX_SPIN + 8){
             clearInterval(timer);
             timer = null;
             finalizeWinner(available);
           }
           spinCount++;
-        }, 220); // melambat
+        }, 220);
       }
-    }, 70); // cepat
+    }, 70);
 
     document.getElementById("counter").textContent = "Berputar otomatis 18x...";
   }
@@ -288,100 +291,70 @@
     document.getElementById("number").classList.remove("spin");
     setDisplay(winner);
 
-    document.getElementById("resultNumber").textContent = "#" + winner.no;
-    document.getElementById("resultName").textContent = winner.name;
-    document.getElementById("resultTheme").textContent = winner.theme || "—";
-    document.getElementById("result").classList.add("show");
+    // Tampilkan modal pemenang
+    document.getElementById("modalNumber").textContent = "#" + winner.no;
+    document.getElementById("modalName").textContent = winner.name;
+    document.getElementById("modalTheme").textContent = winner.theme || "—";
+    document.getElementById("winnerModal").classList.add("show");
+    document.getElementById("modalVideoBtn").style.display = winner.video ? 'inline-block' : 'none';
 
     document.getElementById("playBtn").disabled = false;
     document.getElementById("stopBtn").disabled = true;
-    document.getElementById("videoBtn").disabled = !winner.video;
-    document.getElementById("counter").textContent = "Nomor berhenti: #" + winner.no + " • " + used.size + "/" + participants.length + " sudah terpilih";
+    document.getElementById("counter").textContent = "Pemenang: #" + winner.no + " • " + used.size + "/" + participants.length + " sudah terpilih";
     renderTable();
-
-    // V5: video pemenang otomatis muncul setelah reveal
-    setTimeout(openWinnerVideo, 850);
   }
 
   function stopDraw(){
-    // V5: stop manual tidak digunakan, tetapi tetap dipertahankan untuk fallback
     if(!isDrawing) return;
     clearInterval(timer);
     timer = null;
-    isDrawing = false;
     const available = participants.filter(p=>!used.has(p.no));
-    finalizeWinner(available);
+    if(available.length) finalizeWinner(available);
   }
 
-  /* ===== V4 SPLASH CONTROL ===== */
-  function enterApp(){
-    const overlay=document.getElementById("logoOverlay");
-    if(!overlay) return;
-    overlay.classList.add("hidden");
-    overlay.classList.remove("finish");
-    document.body.style.overflow="";
-    setTimeout(function(){ overlay.style.display="none"; },850);
+  function closeWinnerModal(){
+    document.getElementById("winnerModal").classList.remove("show");
+    document.body.style.overflow = "";
+    // Kembali ke tampilan undian
+    document.getElementById("playBtn").disabled = false;
   }
 
-  function showFinishSplash(){
-    const overlay=document.getElementById("logoOverlay");
-    if(!overlay) return;
-    overlay.style.display="flex";
-    overlay.classList.remove("hidden");
-    overlay.classList.add("finish");
-    document.getElementById("overlayTitle").textContent="PENGUNDIAN SELESAI";
-    document.getElementById("overlaySub").textContent="Semua peserta telah terpilih";
-    document.getElementById("overlayClick").textContent="✦ KLIK UNTUK MULAI LAGI ✦";
-    document.body.style.overflow="hidden";
-  }
+  function playVideoFromModal(){
+    if(!current || !current.video) return;
+    // Buka video overlay di atas modal
+    document.getElementById("winnerVideoStage").classList.add("show");
+    document.getElementById("winnerVideoStage").setAttribute("aria-hidden","false");
+    document.getElementById("winnerVideoName").textContent = current.name || "—";
+    document.getElementById("winnerVideoTheme").textContent = current.theme || "—";
+    document.getElementById("v4Note").classList.remove("show");
+    document.getElementById("v4PlayButton").classList.remove("show");
+    document.body.style.overflow = "hidden";
 
-  function resetCompetition(){
-    used.clear();
-    current=null;
-    isDrawing=false;
-    spinCount=0;
-    if(timer){clearInterval(timer); timer=null;}
-    const overlay=document.getElementById("logoOverlay");
-    if(overlay){
-      overlay.classList.remove("finish");
-      overlay.classList.add("hidden");
-      overlay.style.display="none";
+    const id = youtubeId(current.video);
+    if(id){
+      pendingWinnerVideoId = id;
+      if(ytApiReady){ createV4YouTubePlayer(id); }
+      else{ document.getElementById("winnerVideoFrame").innerHTML = '<div style="height:100%;display:grid;place-items:center;color:#9aa9bd">Memuat video...</div>'; }
+    } else {
+      document.getElementById("winnerVideoFrame").innerHTML = '<video id="v4DirectVideo" src="'+escapeHtml(current.video)+'" controls autoplay playsinline></video>';
+      const dv = document.getElementById("v4DirectVideo");
+      dv.addEventListener("ended", function(){
+        // Video selesai, kembali ke modal winner
+        closeVideoOnly();
+      });
     }
-    document.getElementById("overlayTitle").textContent="UNDIAN LOMBA VIDEO KONTEN";
-    document.getElementById("overlaySub").textContent="Klik layar untuk memulai";
-    document.getElementById("overlayClick").textContent="✦ KLIK UNTUK MASUK ✦";
-    document.getElementById("result").classList.remove("show");
-    document.getElementById("player").classList.remove("show");
-    document.getElementById("videoWrap").innerHTML="";
-    document.getElementById("videoBtn").disabled=true;
-    document.getElementById("number").textContent="#—";
-    document.getElementById("name").textContent="SIAP?";
-    document.getElementById("theme").textContent="Tekan PLAY untuk memulai pengundian";
-    renderTable();
-    document.body.style.overflow="";
   }
 
-  function initSplash(){
-    const overlay=document.getElementById("logoOverlay");
-    if(!overlay) return;
-    overlay.addEventListener("click",function(){
-      if(overlay.classList.contains("finish")) resetCompetition();
-      else enterApp();
-    });
-    overlay.addEventListener("keydown",function(e){
-      if(e.key==="Enter" || e.key===" "){
-        e.preventDefault();
-        if(overlay.classList.contains("finish")) resetCompetition();
-        else enterApp();
-      }
-    });
-    overlay.style.display="flex";
-    overlay.classList.remove("hidden");
-    overlay.classList.remove("finish");
-    document.body.style.overflow="hidden";
+  function closeVideoOnly(){
+    document.getElementById("winnerVideoStage").classList.remove("show");
+    document.getElementById("winnerVideoStage").setAttribute("aria-hidden","true");
+    if(ytPlayer){ try{ytPlayer.stopVideo(); ytPlayer.destroy();}catch(e){} ytPlayer=null; }
+    document.getElementById("winnerVideoFrame").innerHTML = "";
+    pendingWinnerVideoId = null;
+    // Modal winner tetap tampil
+    document.getElementById("winnerModal").classList.add("show");
   }
 
-  /* ===== V5 YOUTUBE PLAYER (autoplay 1x, stop setelah selesai) ===== */
   let ytPlayer=null;
   let ytApiReady=false;
   let pendingWinnerVideoId=null;
@@ -396,35 +369,6 @@
     const patterns=[/youtu\.be\/([^?&#/]+)/i,/youtube\.com\/watch\?[^#]*v=([^?&#/]+)/i,/youtube\.com\/shorts\/([^?&#/]+)/i,/youtube\.com\/embed\/([^?&#/]+)/i,/youtube-nocookie\.com\/embed\/([^?&#/]+)/i];
     for(const re of patterns){ const m=s.match(re); if(m) return m[1]; }
     return null;
-  }
-
-  function openWinnerVideo(){
-    if(!current || !current.video) return;
-    const stage=document.getElementById("winnerVideoStage");
-    const frame=document.getElementById("winnerVideoFrame");
-    const note=document.getElementById("v4Note");
-    const playBtn=document.getElementById("v4PlayButton");
-    document.getElementById("winnerVideoName").textContent=current.name||"—";
-    document.getElementById("winnerVideoTheme").textContent=current.theme||"—";
-    note.classList.remove("show");
-    playBtn.classList.remove("show");
-    stage.classList.add("show");
-    stage.setAttribute("aria-hidden","false");
-    document.body.style.overflow="hidden";
-
-    const id=youtubeId(current.video);
-    if(id){
-      pendingWinnerVideoId=id;
-      if(ytApiReady){ createV4YouTubePlayer(id); }
-      else{ frame.innerHTML='<div style="height:100%;display:grid;place-items:center;color:#9aa9bd">Memuat video...</div>'; }
-    } else {
-      frame.innerHTML='<video id="v4DirectVideo" src="'+escapeHtml(current.video)+'" controls autoplay playsinline></video>';
-      const dv=document.getElementById("v4DirectVideo");
-      dv.addEventListener("ended",function(){
-        // video selesai -> jika semua peserta sudah terpilih, close + splash
-        if(participants.length && used.size>=participants.length) closeWinnerVideo();
-      });
-    }
   }
 
   function createV4YouTubePlayer(id){
@@ -445,20 +389,17 @@
             document.getElementById("v4PlayButton").classList.remove("show");
           }
           if(event.data===YT.PlayerState.ENDED){
-            // V5: video berakhir, otomatis berhenti & close jika semua peserta sudah selesai
-            if(participants.length && used.size>=participants.length){
-              setTimeout(closeWinnerVideo,500);
-            }
+            // Video selesai, kembali ke modal winner
+            closeVideoOnly();
           }
         },
         onAutoplayBlocked:function(){
-          const note=document.getElementById("v4Note");
-          note.textContent="Autoplay diblokir browser. Tekan PLAY VIDEO untuk memulai.";
-          note.classList.add("show");
+          document.getElementById("v4Note").textContent="Autoplay diblokir. Tekan PLAY VIDEO.";
+          document.getElementById("v4Note").classList.add("show");
           document.getElementById("v4PlayButton").classList.add("show");
         },
         onError:function(){
-          document.getElementById("v4Note").textContent="Video YouTube tidak dapat diputar/di-embed.";
+          document.getElementById("v4Note").textContent="Video tidak dapat diputar.";
           document.getElementById("v4Note").classList.add("show");
         }
       }
@@ -473,26 +414,14 @@
     document.getElementById("v4Note").classList.remove("show");
   }
 
-  function closeWinnerVideo(){
-    document.getElementById("winnerVideoStage").classList.remove("show");
-    document.getElementById("winnerVideoStage").setAttribute("aria-hidden","true");
-    document.body.style.overflow="";
-    if(ytPlayer){ try{ytPlayer.stopVideo();ytPlayer.destroy();}catch(e){} ytPlayer=null; }
-    document.getElementById("winnerVideoFrame").innerHTML="";
-    pendingWinnerVideoId=null;
-    // V5: jika semua peserta sudah terpilih, tampilkan splash selesai
-    if(participants.length && used.size >= participants.length){
-      setTimeout(showFinishSplash,350);
-    }
-  }
-
-  function showWinnerVideo(){ openWinnerVideo(); }
-
   document.addEventListener("DOMContentLoaded",()=>{
-    initSplash();
+    document.getElementById("logoOverlay").addEventListener("click", function(){
+      this.classList.add("hidden");
+      document.body.style.overflow="";
+      setTimeout(()=>{ this.style.display="none"; }, 850);
+    });
     loadData();
     setInterval(loadData,15000);
-    document.addEventListener("visibilitychange",()=>{ if(!document.hidden) loadData(); });
   });
 </script>
 </body>
