@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Undian Lomba Video Konten · Modal Winner</title>
+  <title>Undian Lomba Video Konten V5 · Ultimate</title>
   <style>
     *{box-sizing:border-box}
     :root{--bg:#070b14;--card:#101827;--line:#24334a;--text:#f5f7fb;--muted:#9aa9bd;--accent:#48d7ff;--ok:#41e38a;--danger:#ff5277;--gold:#ffd35a;--violet:#b388ff}
@@ -55,30 +55,20 @@
     .finish .logo-click{background:rgba(255,211,90,.10);border-color:rgba(255,211,90,.35)}
     @keyframes logoOrbit{to{transform:rotate(360deg)}}@keyframes spinBg{to{transform:rotate(-360deg)}}@keyframes logoFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}@keyframes logoPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.025)}}@keyframes clickPulse{0%,100%{box-shadow:0 0 0 rgba(72,215,255,0)}50%{box-shadow:0 0 30px rgba(72,215,255,.18)}}
 
-    /* ===== WINNER MODAL (fixed di halaman utama) ===== */
-    #winnerModal{
-      display:none; position:fixed; inset:0; z-index:8000;
-      background:rgba(0,0,0,.85); backdrop-filter:blur(8px);
-      align-items:center; justify-content:center; padding:20px;
-    }
-    #winnerModal.show{display:flex; animation:modalIn .4s cubic-bezier(.17,.89,.32,1.28)}
-    @keyframes modalIn{from{opacity:0; transform:scale(.8)}to{opacity:1; transform:scale(1)}}
-    .winner-modal-box{
-      background:linear-gradient(145deg,#1a1f2e,#0b101c);
-      border:2px solid var(--gold); border-radius:24px;
-      padding:30px; max-width:700px; width:100%;
-      text-align:center; box-shadow:0 0 80px rgba(255,211,90,.25);
-      position:relative;
-    }
-    .winner-modal-box .boom{font-size:72px; animation:boom .65s ease-out}
-    .winner-modal-box h2{font-size:clamp(42px,10vw,80px); margin:10px 0; color:var(--gold); text-shadow:0 0 30px rgba(255,211,90,.5)}
-    .winner-modal-box .winner-name{font-size:clamp(28px,6vw,48px); font-weight:900; color:white}
-    .winner-modal-box .winner-theme{color:#cbd5e1; margin-top:10px; font-size:18px}
-    .winner-modal-box .modal-actions{display:flex; gap:12px; justify-content:center; margin-top:25px; flex-wrap:wrap}
-    .winner-modal-box .btn-play-video{background:var(--gold); color:#1a1a1a; font-weight:900; padding:14px 28px; border-radius:14px; cursor:pointer; border:none; font-size:16px; box-shadow:0 10px 30px rgba(255,211,90,.3)}
-    .winner-modal-box .btn-close-modal{background:#2a3446; color:white; border:1px solid #4a5a75; padding:14px 28px; border-radius:14px; cursor:pointer; font-weight:700}
+    /* ===== WINNER MODAL ===== */
+    #winnerModal{display:none;position:fixed;inset:0;z-index:8000;background:rgba(0,0,0,.85);backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:20px}
+    #winnerModal.show{display:flex;animation:modalIn .4s cubic-bezier(.17,.89,.32,1.28)}
+    @keyframes modalIn{from{opacity:0;transform:scale(.8)}to{opacity:1;transform:scale(1)}}
+    .winner-modal-box{background:linear-gradient(145deg,#1a1f2e,#0b101c);border:2px solid var(--gold);border-radius:24px;padding:30px;max-width:700px;width:100%;text-align:center;box-shadow:0 0 80px rgba(255,211,90,.25);position:relative}
+    .winner-modal-box .boom{font-size:72px;animation:boom .65s ease-out}
+    .winner-modal-box h2{font-size:clamp(42px,10vw,80px);margin:10px 0;color:var(--gold);text-shadow:0 0 30px rgba(255,211,90,.5)}
+    .winner-modal-box .winner-name{font-size:clamp(28px,6vw,48px);font-weight:900;color:white}
+    .winner-modal-box .winner-theme{color:#cbd5e1;margin-top:10px;font-size:18px}
+    .winner-modal-box .modal-actions{display:flex;gap:12px;justify-content:center;margin-top:25px;flex-wrap:wrap}
+    .winner-modal-box .btn-play-video{background:var(--gold);color:#1a1a1a;font-weight:900;padding:14px 28px;border-radius:14px;cursor:pointer;border:none;font-size:16px;box-shadow:0 10px 30px rgba(255,211,90,.3)}
+    .winner-modal-box .btn-close-modal{background:#2a3446;color:white;border:1px solid #4a5a75;padding:14px 28px;border-radius:14px;cursor:pointer;font-weight:700}
 
-    /* ===== VIDEO OVERLAY (diatas modal winner) ===== */
+    /* ===== VIDEO OVERLAY ===== */
     #winnerVideoStage{display:none;position:fixed;inset:0;z-index:9000;background:rgba(0,0,0,.97);align-items:center;justify-content:center;padding:20px}
     #winnerVideoStage.show{display:flex;animation:v4In .3s ease-out}
     @keyframes v4In{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}
@@ -94,6 +84,22 @@
     .v4-note.show{display:block}
     .v4-play{display:none;margin:10px auto 0}
     .v4-play.show{display:block}
+
+    /* ===== LOADING SPINNER ===== */
+    .spinner{width:40px;height:40px;border:4px solid rgba(255,255,255,.2);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite;margin:20px auto}
+    @keyframes spin{to{transform:rotate(360deg)}}
+
+    /* ===== HISTORY TABLE ===== */
+    .history-table{margin-top:20px;padding:18px}
+    .history-table h3{color:var(--gold);margin:0 0 15px;font-size:18px}
+    .history-list{display:flex;flex-direction:column;gap:8px}
+    .history-item{display:flex;justify-content:space-between;align-items:center;padding:10px 15px;background:rgba(72,215,255,.05);border-radius:10px;border:1px solid var(--line)}
+    .history-item .h-name{font-weight:700}
+    .history-item .h-time{color:var(--muted);font-size:12px}
+
+    /* ===== EXPORT BUTTON ===== */
+    .btn-export{background:var(--ok);color:#06111a;font-weight:900;padding:10px 20px;border-radius:10px;cursor:pointer;border:none;font-size:14px}
+    .btn-export:hover{box-shadow:0 5px 20px rgba(65,227,138,.3)}
   </style>
   <script>
     (function(){
@@ -174,6 +180,7 @@
       <button id="playBtn" onclick="startDraw()">▶ PLAY / UNDI</button>
       <button id="stopBtn" class="danger" onclick="stopDraw()" disabled>■ STOP</button>
       <button class="secondary" onclick="loadData()">↻ SINKRONKAN</button>
+      <button class="btn-export" onclick="exportHistory()">📥 EXPORT CSV</button>
     </div>
   </section>
 
@@ -182,6 +189,11 @@
       <thead><tr><th>No.</th><th>Nama Peserta/Grup</th><th>Tema Lomba</th><th>Status</th></tr></thead>
       <tbody id="tbody"><tr><td colspan="4" class="empty">Memuat data...</td></tr></tbody>
     </table>
+  </section>
+
+  <section class="card history-table" id="historySection" style="display:none">
+    <h3>🏆 RIWAYAT PEMENANG</h3>
+    <div class="history-list" id="historyList"></div>
   </section>
 </main>
 
@@ -195,6 +207,8 @@
   let lastSync = null;
   let spinCount = 0;
   const MAX_SPIN = 18;
+  let winnersHistory = [];
+  let audioCtx = null;
 
   function decodeBase64Url(value){ try { return atob(value); } catch(e){ return ""; } }
   const GAS_URL = decodeBase64Url(GAS_URL_B64);
@@ -203,10 +217,51 @@
     document.getElementById("liveDot").className = "dot " + (ok ? "ok" : "err");
     document.getElementById("liveText").textContent = text;
   }
+
   function escapeHtml(v){
     return String(v ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));
   }
 
+  function escapeCsv(v){
+    return '"' + String(v ?? "").replace(/"/g, '""') + '"';
+  }
+
+  // ===== SOUND EFFECTS =====
+  function playSound(type){
+    try{
+      if(!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      gain.gain.value = 0.15;
+      
+      if(type === 'tick'){
+        osc.frequency.value = 800;
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.05);
+        osc.start(audioCtx.currentTime);
+        osc.stop(audioCtx.currentTime + 0.05);
+      } else if(type === 'win'){
+        osc.frequency.value = 523;
+        gain.gain.exponentialRampToValueAtTime(0.3, audioCtx.currentTime + 0.3);
+        osc.start(audioCtx.currentTime);
+        osc.stop(audioCtx.currentTime + 0.5);
+        setTimeout(()=>{
+          const osc2 = audioCtx.createOscillator();
+          const gain2 = audioCtx.createGain();
+          osc2.connect(gain2);
+          gain2.connect(audioCtx.destination);
+          osc2.frequency.value = 659;
+          gain2.gain.value = 0.2;
+          gain2.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.4);
+          osc2.start(audioCtx.currentTime);
+          osc2.stop(audioCtx.currentTime + 0.4);
+        }, 200);
+      }
+    }catch(e){}
+  }
+
+  // ===== LOAD DATA =====
   async function loadData(){
     if(!GAS_URL){ setLive(false,"URL API belum diisi"); document.getElementById("syncText").textContent = "URL Google Apps Script belum dikonfigurasi"; return; }
     setLive(false,"Menghubungkan GAS...");
@@ -223,6 +278,7 @@
       document.getElementById("rowText").textContent = participants.length + " peserta";
       renderTable();
       document.getElementById("counter").textContent = participants.length ? participants.length + " peserta siap diundi" : "Spreadsheet belum memiliki peserta";
+      loadHistoryFromStorage();
     }catch(err){
       console.error("GAS connection error:",err);
       setLive(false,"GAS TIDAK TERHUBUNG");
@@ -230,6 +286,7 @@
     }
   }
 
+  // ===== RENDER TABLE =====
   function renderTable(){
     const tbody = document.getElementById("tbody");
     if(!participants.length){ tbody.innerHTML = '<tr><td colspan="4" class="empty">Tidak ada peserta.</td></tr>'; return; }
@@ -242,6 +299,7 @@
     document.getElementById("theme").textContent = p.theme || "—";
   }
 
+  // ===== START DRAW =====
   function startDraw(){
     if(isDrawing || participants.length===0) return;
     if(used.size >= participants.length){
@@ -262,6 +320,7 @@
     timer = setInterval(()=>{
       const p = available[Math.floor(Math.random()*available.length)];
       setDisplay(p);
+      playSound('tick');
       spinCount++;
 
       if(spinCount >= MAX_SPIN){
@@ -290,6 +349,7 @@
 
     document.getElementById("number").classList.remove("spin");
     setDisplay(winner);
+    playSound('win');
 
     // Tampilkan modal pemenang
     document.getElementById("modalNumber").textContent = "#" + winner.no;
@@ -297,6 +357,16 @@
     document.getElementById("modalTheme").textContent = winner.theme || "—";
     document.getElementById("winnerModal").classList.add("show");
     document.getElementById("modalVideoBtn").style.display = winner.video ? 'inline-block' : 'none';
+
+    // Simpan ke riwayat
+    winnersHistory.push({
+      no: winner.no,
+      name: winner.name,
+      theme: winner.theme || "—",
+      timestamp: new Date().toLocaleString("id-ID")
+    });
+    saveHistoryToStorage();
+    renderHistory();
 
     document.getElementById("playBtn").disabled = false;
     document.getElementById("stopBtn").disabled = true;
@@ -312,16 +382,15 @@
     if(available.length) finalizeWinner(available);
   }
 
+  // ===== MODAL CONTROLS =====
   function closeWinnerModal(){
     document.getElementById("winnerModal").classList.remove("show");
     document.body.style.overflow = "";
-    // Kembali ke tampilan undian
     document.getElementById("playBtn").disabled = false;
   }
 
   function playVideoFromModal(){
     if(!current || !current.video) return;
-    // Buka video overlay di atas modal
     document.getElementById("winnerVideoStage").classList.add("show");
     document.getElementById("winnerVideoStage").setAttribute("aria-hidden","false");
     document.getElementById("winnerVideoName").textContent = current.name || "—";
@@ -334,12 +403,13 @@
     if(id){
       pendingWinnerVideoId = id;
       if(ytApiReady){ createV4YouTubePlayer(id); }
-      else{ document.getElementById("winnerVideoFrame").innerHTML = '<div style="height:100%;display:grid;place-items:center;color:#9aa9bd">Memuat video...</div>'; }
+      else{ 
+        document.getElementById("winnerVideoFrame").innerHTML = '<div class="spinner"></div><p style="text-align:center;color:#9aa9bd">Memuat video...</p>';
+      }
     } else {
       document.getElementById("winnerVideoFrame").innerHTML = '<video id="v4DirectVideo" src="'+escapeHtml(current.video)+'" controls autoplay playsinline></video>';
       const dv = document.getElementById("v4DirectVideo");
       dv.addEventListener("ended", function(){
-        // Video selesai, kembali ke modal winner
         closeVideoOnly();
       });
     }
@@ -351,10 +421,10 @@
     if(ytPlayer){ try{ytPlayer.stopVideo(); ytPlayer.destroy();}catch(e){} ytPlayer=null; }
     document.getElementById("winnerVideoFrame").innerHTML = "";
     pendingWinnerVideoId = null;
-    // Modal winner tetap tampil
     document.getElementById("winnerModal").classList.add("show");
   }
 
+  // ===== YOUTUBE API =====
   let ytPlayer=null;
   let ytApiReady=false;
   let pendingWinnerVideoId=null;
@@ -389,7 +459,6 @@
             document.getElementById("v4PlayButton").classList.remove("show");
           }
           if(event.data===YT.PlayerState.ENDED){
-            // Video selesai, kembali ke modal winner
             closeVideoOnly();
           }
         },
@@ -414,6 +483,58 @@
     document.getElementById("v4Note").classList.remove("show");
   }
 
+  // ===== HISTORY (LOCALSTORAGE) =====
+  function saveHistoryToStorage(){
+    try{
+      localStorage.setItem('undian_winners', JSON.stringify(winnersHistory));
+    }catch(e){}
+  }
+
+  function loadHistoryFromStorage(){
+    try{
+      const saved = localStorage.getItem('undian_winners');
+      if(saved){
+        winnersHistory = JSON.parse(saved);
+        renderHistory();
+      }
+    }catch(e){}
+  }
+
+  function renderHistory(){
+    const section = document.getElementById("historySection");
+    const list = document.getElementById("historyList");
+    if(winnersHistory.length === 0){
+      section.style.display = "none";
+      return;
+    }
+    section.style.display = "block";
+    list.innerHTML = winnersHistory.map((w, i) => `
+      <div class="history-item">
+        <span class="h-name">#${w.no} - ${escapeHtml(w.name)}</span>
+        <span class="h-time">${escapeHtml(w.timestamp)}</span>
+      </div>
+    `).join("");
+  }
+
+  // ===== EXPORT CSV =====
+  function exportHistory(){
+    if(winnersHistory.length === 0){
+      alert("Belum ada pemenang untuk diexport.");
+      return;
+    }
+    let csv = "No,Nama,Tema,Waktu\n";
+    winnersHistory.forEach(w => {
+      csv += `${w.no},${escapeCsv(w.name)},${escapeCsv(w.theme)},${escapeCsv(w.timestamp)}\n`;
+    });
+    const blob = new Blob([csv], {type: 'text/csv;charset=utf-8;'});
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = 'pemenang_undian.csv';
+    link.click();
+    URL.revokeObjectURL(link.href);
+  }
+
+  // ===== INIT =====
   document.addEventListener("DOMContentLoaded",()=>{
     document.getElementById("logoOverlay").addEventListener("click", function(){
       this.classList.add("hidden");
@@ -421,7 +542,8 @@
       setTimeout(()=>{ this.style.display="none"; }, 850);
     });
     loadData();
-    setInterval(loadData,15000);
+    setInterval(loadData, 30000);
+    loadHistoryFromStorage();
   });
 </script>
 </body>
