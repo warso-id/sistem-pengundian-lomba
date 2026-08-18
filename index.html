@@ -1,143 +1,97 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Undian Lomba Video Konten</title>
-<style>
-*{box-sizing:border-box}
-:root{--bg:#070b14;--card:#101827;--line:#24334a;--text:#f5f7fb;--muted:#9aa9bd;--accent:#48d7ff;--ok:#41e38a;--danger:#ff5277;--gold:#ffd35a}
-body{margin:0;background:radial-gradient(circle at 50% -10%,#17345a 0,#070b14 48%);color:var(--text);font-family:Inter,Segoe UI,Arial,sans-serif;min-height:100vh}
-header{padding:18px 24px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,.08);background:rgba(7,11,20,.72);backdrop-filter:blur(10px);position:sticky;top:0;z-index:20}
-.brand{font-size:20px;font-weight:800;letter-spacing:.3px}.brand span{color:var(--accent)}
-.live{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted)}
-.dot{width:10px;height:10px;border-radius:50%;background:#777}.dot.ok{background:var(--ok);box-shadow:0 0 12px var(--ok);animation:livePulse 1.5s ease-in-out infinite}.dot.err{background:var(--danger)}
-main{max-width:1200px;margin:auto;padding:28px 18px 60px}
-.status{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:18px;color:var(--muted);font-size:13px}
-.card{background:linear-gradient(180deg,rgba(20,31,49,.94),rgba(11,18,30,.96));border:1px solid var(--line);border-radius:22px;box-shadow:0 20px 70px rgba(0,0,0,.28);overflow:hidden}
-.top{padding:28px;text-align:center}
-.kicker{font-size:13px;color:var(--accent);font-weight:700;letter-spacing:2px;text-transform:uppercase}
-h1{font-size:clamp(28px,5vw,54px);margin:8px 0 4px}
-.sub{color:var(--muted);margin:0}
-.counter{font-size:13px;color:var(--muted);margin-top:16px}
-.draw{min-height:260px;display:flex;align-items:center;justify-content:center;flex-direction:column;padding:25px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-.number{font-size:clamp(72px,15vw,170px);line-height:.9;font-weight:950;letter-spacing:-8px;text-shadow:0 0 40px rgba(72,215,255,.15);transition:transform .15s}
-.number.spin{animation:tick .09s infinite alternate}
-@keyframes tick{to{transform:translateY(-5px) scale(1.02)}}@keyframes livePulse{0%,100%{opacity:1}50%{opacity:.45}}
-.name{font-size:clamp(22px,4vw,40px);font-weight:800;margin-top:18px;text-align:center}
-.theme{color:var(--muted);margin-top:7px;text-align:center}
-.actions{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;padding:24px}
-button{border:0;border-radius:13px;padding:13px 20px;font-size:15px;font-weight:800;cursor:pointer;color:#06111a;background:var(--accent);box-shadow:0 8px 25px rgba(72,215,255,.16)}
-button.secondary{background:#1a273a;color:#eaf1fb;border:1px solid #30445e;box-shadow:none}
-button.danger{background:var(--danger);color:white}
-button:disabled{opacity:.45;cursor:not-allowed}
-.player{display:none;padding:18px;background:#05080e}
-.player.show{display:block}
-.video-wrap{position:relative;width:100%;aspect-ratio:16/9;background:#000;border-radius:15px;overflow:hidden}
-.video-wrap iframe,.video-wrap video{position:absolute;inset:0;width:100%;height:100%;border:0}
-.result{display:none;text-align:center;padding:26px 18px 34px;background:radial-gradient(circle at 50% 30%,rgba(255,211,90,.12),transparent 50%)}
-.result.show{display:block}
-.result .boom{font-size:64px;animation:boom .65s ease-out}
-@keyframes boom{0%{transform:scale(.1);opacity:0}55%{transform:scale(1.25);opacity:1}100%{transform:scale(1)}}
-.result h2{font-size:clamp(32px,7vw,74px);margin:5px 0;color:var(--gold)}
-.result .winner{font-size:clamp(25px,5vw,50px);font-weight:900}
-.result .winner-theme{color:var(--muted);margin-top:8px}
-.table-card{margin-top:20px;padding:18px}
-table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:12px;border-bottom:1px solid var(--line);font-size:14px}th{color:var(--muted);font-size:12px;text-transform:uppercase}
-tr.active{background:rgba(72,215,255,.08)}
-.empty{text-align:center;color:var(--muted);padding:30px}
-.hint{margin-top:10px;color:var(--muted);font-size:12px;text-align:center}
-@media(max-width:650px){header{padding:14px 16px}.top{padding:22px 16px}.actions{padding:18px 12px}.actions button{width:100%}th:nth-child(3),td:nth-child(3){display:none}}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Undian Lomba Video Konten V5 · 18 spin</title>
+  <style>
+    *{box-sizing:border-box}
+    :root{--bg:#070b14;--card:#101827;--line:#24334a;--text:#f5f7fb;--muted:#9aa9bd;--accent:#48d7ff;--ok:#41e38a;--danger:#ff5277;--gold:#ffd35a;--violet:#b388ff}
+    body{margin:0;background:radial-gradient(circle at 50% -10%,#17345a 0,#070b14 48%);color:var(--text);font-family:Inter,Segoe UI,Arial,sans-serif;min-height:100vh}
+    header{padding:18px 24px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,.08);background:rgba(7,11,20,.72);backdrop-filter:blur(10px);position:sticky;top:0;z-index:20}
+    .brand{font-size:20px;font-weight:800;letter-spacing:.3px}.brand span{color:var(--accent)}
+    .live{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted)}
+    .dot{width:10px;height:10px;border-radius:50%;background:#777}.dot.ok{background:var(--ok);box-shadow:0 0 12px var(--ok);animation:livePulse 1.5s ease-in-out infinite}.dot.err{background:var(--danger)}
+    main{max-width:1200px;margin:auto;padding:28px 18px 60px}
+    .status{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:18px;color:var(--muted);font-size:13px}
+    .card{background:linear-gradient(180deg,rgba(20,31,49,.94),rgba(11,18,30,.96));border:1px solid var(--line);border-radius:22px;box-shadow:0 20px 70px rgba(0,0,0,.28);overflow:hidden}
+    .top{padding:28px;text-align:center}
+    .kicker{font-size:13px;color:var(--accent);font-weight:700;letter-spacing:2px;text-transform:uppercase}
+    h1{font-size:clamp(28px,5vw,54px);margin:8px 0 4px}
+    .sub{color:var(--muted);margin:0}
+    .counter{font-size:13px;color:var(--muted);margin-top:16px}
+    .draw{min-height:260px;display:flex;align-items:center;justify-content:center;flex-direction:column;padding:25px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);position:relative;overflow:hidden}
+    .draw::before{content:"";position:absolute;inset:-50%;background:conic-gradient(from 0deg,transparent,rgba(72,215,255,.06),transparent 25%);animation:drawSweep 5s linear infinite;pointer-events:none}
+    @keyframes drawSweep{to{transform:rotate(360deg)}}
+    .number{font-size:clamp(72px,15vw,170px);line-height:.9;font-weight:950;letter-spacing:-8px;text-shadow:0 0 40px rgba(72,215,255,.15);transition:transform .15s}
+    .number.spin{animation:tick .075s infinite alternate, numberGlow 1s ease-in-out infinite}
+    @keyframes tick{to{transform:translateY(-5px) scale(1.02)}}@keyframes livePulse{0%,100%{opacity:1}50%{opacity:.45}}
+    @keyframes numberGlow{50%{text-shadow:0 0 35px rgba(72,215,255,.65),0 0 75px rgba(72,215,255,.18)}}
+    .name{font-size:clamp(22px,4vw,40px);font-weight:800;margin-top:18px;text-align:center}
+    .theme{color:var(--muted);margin-top:7px;text-align:center}
+    .actions{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;padding:24px}
+    button{border:0;border-radius:13px;padding:13px 20px;font-size:15px;font-weight:800;cursor:pointer;color:#06111a;background:var(--accent);box-shadow:0 8px 25px rgba(72,215,255,.16)}
+    button.secondary{background:#1a273a;color:#eaf1fb;border:1px solid #30445e;box-shadow:none}
+    button.danger{background:var(--danger);color:white}
+    button:disabled{opacity:.45;cursor:not-allowed}
+    .player{display:none;padding:18px;background:#05080e}
+    .player.show{display:block}
+    .video-wrap{position:relative;width:100%;aspect-ratio:16/9;background:#000;border-radius:15px;overflow:hidden}
+    .video-wrap iframe,.video-wrap video{position:absolute;inset:0;width:100%;height:100%;border:0}
+    .result{display:none;text-align:center;padding:26px 18px 34px;background:radial-gradient(circle at 50% 30%,rgba(255,211,90,.12),transparent 50%)}
+    .result.show{display:block;animation:resultIn .7s cubic-bezier(.17,.89,.32,1.28)}
+    .result .boom{font-size:64px;animation:boom .65s ease-out}
+    @keyframes boom{0%{transform:scale(.1);opacity:0}55%{transform:scale(1.25);opacity:1}100%{transform:scale(1)}}
+    @keyframes resultIn{0%{opacity:0;transform:scale(.72)}70%{opacity:1;transform:scale(1.04)}100%{transform:scale(1)}}
+    .result h2{font-size:clamp(32px,7vw,74px);margin:5px 0;color:var(--gold)}
+    .result .winner{font-size:clamp(25px,5vw,50px);font-weight:900;animation:winnerText .8s .15s both cubic-bezier(.17,.89,.32,1.28)}
+    .result .winner-theme{color:var(--muted);margin-top:8px}
+    @keyframes winnerText{from{opacity:0;transform:translateY(22px);filter:blur(8px)}to{opacity:1;transform:none;filter:none}}
+    .table-card{margin-top:20px;padding:18px}
+    table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:12px;border-bottom:1px solid var(--line);font-size:14px}th{color:var(--muted);font-size:12px;text-transform:uppercase}
+    tr.active{background:rgba(72,215,255,.08)}
+    .empty{text-align:center;color:var(--muted);padding:30px}
+    .hint{margin-top:10px;color:var(--muted);font-size:12px;text-align:center}
+    @media(max-width:650px){header{padding:14px 16px}.top{padding:22px 16px}.actions{padding:18px 12px}.actions button{width:100%}th:nth-child(3),td:nth-child(3){display:none}}
 
-/* ===== FULLSCREEN LOGO / OPEN & FINISH OVERLAY ===== */
-.logo-overlay{
-  position:fixed; inset:0; z-index:9999;
-  display:flex; align-items:center; justify-content:center;
-  background:
-    radial-gradient(circle at 50% 45%,rgba(72,215,255,.16),transparent 32%),
-    radial-gradient(circle at 50% 50%,#13243d 0,#050912 62%,#02040a 100%);
-  cursor:pointer;
-  transition:opacity .8s ease, visibility .8s ease, transform .8s ease;
-  overflow:hidden;
-}
-.logo-overlay::before{
-  content:""; position:absolute; width:65vmin; height:65vmin;
-  border:1px solid rgba(72,215,255,.28); border-radius:50%;
-  box-shadow:0 0 80px rgba(72,215,255,.12), inset 0 0 80px rgba(72,215,255,.06);
-  animation:logoOrbit 8s linear infinite;
-}
-.logo-overlay::after{
-  content:""; position:absolute; width:90vmax; height:90vmax;
-  background:conic-gradient(from 0deg,transparent,rgba(72,215,255,.10),transparent 20%,rgba(255,211,90,.08),transparent 42%);
-  border-radius:50%; animation:spinBg 14s linear infinite;
-}
-.logo-overlay.hidden{opacity:0;visibility:hidden;transform:scale(1.04);pointer-events:none}
-.logo-overlay.finish{opacity:1;visibility:visible;transform:scale(1);pointer-events:auto}
-.logo-center{position:relative;z-index:2;text-align:center;animation:logoFloat 3.5s ease-in-out infinite}
-.logo-image{
-  display:block; width:min(58vw,430px); max-height:58vh; object-fit:contain;
-  filter:drop-shadow(0 0 22px rgba(72,215,255,.32)) drop-shadow(0 18px 45px rgba(0,0,0,.5));
-  animation:logoPulse 2.2s ease-in-out infinite;
-}
-.logo-title{margin-top:22px;font-size:clamp(18px,3vw,28px);font-weight:900;letter-spacing:5px;text-transform:uppercase}
-.logo-sub{margin-top:9px;color:#a9b8cb;font-size:13px;letter-spacing:2px}
-.logo-click{margin-top:28px;display:inline-flex;align-items:center;gap:9px;padding:12px 18px;border:1px solid rgba(255,255,255,.18);border-radius:999px;background:rgba(255,255,255,.06);color:#eef6ff;font-weight:800;font-size:13px;animation:clickPulse 1.7s ease-in-out infinite}
-.finish .logo-click{background:rgba(255,211,90,.10);border-color:rgba(255,211,90,.35)}
-@keyframes logoOrbit{to{transform:rotate(360deg)}}
-@keyframes spinBg{to{transform:rotate(-360deg)}}
-@keyframes logoFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
-@keyframes logoPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.025)}}
-@keyframes clickPulse{0%,100%{box-shadow:0 0 0 rgba(72,215,255,0)}50%{box-shadow:0 0 30px rgba(72,215,255,.18)}}
-@media(max-width:600px){.logo-image{width:72vw;max-height:48vh}.logo-title{letter-spacing:3px}}
-/* ===== DRAW / REVEAL ANIMATIONS ===== */
-.draw{position:relative;overflow:hidden}
-.draw::before{
-  content:"";position:absolute;inset:-50%;
-  background:conic-gradient(from 0deg,transparent,rgba(72,215,255,.06),transparent 25%);
-  animation:drawSweep 5s linear infinite;pointer-events:none
-}
-@keyframes drawSweep{to{transform:rotate(360deg)}}
-.number.spin{animation:tick .075s infinite alternate, numberGlow 1s ease-in-out infinite}
-@keyframes numberGlow{50%{text-shadow:0 0 35px rgba(72,215,255,.65),0 0 75px rgba(72,215,255,.18)}}
-.result.show{animation:resultIn .7s cubic-bezier(.17,.89,.32,1.28)}
-@keyframes resultIn{0%{opacity:0;transform:scale(.72)}70%{opacity:1;transform:scale(1.04)}100%{transform:scale(1)}}
-.result.show .winner{animation:winnerText .8s .15s both cubic-bezier(.17,.89,.32,1.28)}
-@keyframes winnerText{from{opacity:0;transform:translateY(22px);filter:blur(8px)}to{opacity:1;transform:none;filter:none}}
+    /* ===== FULLSCREEN LOGO / OPEN & FINISH OVERLAY ===== */
+    .logo-overlay{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle at 50% 45%,rgba(72,215,255,.16),transparent 32%),radial-gradient(circle at 50% 50%,#13243d 0,#050912 62%,#02040a 100%);cursor:pointer;transition:opacity .8s ease, visibility .8s ease, transform .8s ease;overflow:hidden}
+    .logo-overlay::before{content:"";position:absolute;width:65vmin;height:65vmin;border:1px solid rgba(72,215,255,.28);border-radius:50%;box-shadow:0 0 80px rgba(72,215,255,.12), inset 0 0 80px rgba(72,215,255,.06);animation:logoOrbit 8s linear infinite}
+    .logo-overlay::after{content:"";position:absolute;width:90vmax;height:90vmax;background:conic-gradient(from 0deg,transparent,rgba(72,215,255,.10),transparent 20%,rgba(255,211,90,.08),transparent 42%);border-radius:50%;animation:spinBg 14s linear infinite}
+    .logo-overlay.hidden{opacity:0;visibility:hidden;transform:scale(1.04);pointer-events:none}
+    .logo-overlay.finish{opacity:1;visibility:visible;transform:scale(1);pointer-events:auto}
+    .logo-center{position:relative;z-index:2;text-align:center;animation:logoFloat 3.5s ease-in-out infinite}
+    .logo-image{display:block;width:min(58vw,430px);max-height:58vh;object-fit:contain;filter:drop-shadow(0 0 22px rgba(72,215,255,.32)) drop-shadow(0 18px 45px rgba(0,0,0,.5));animation:logoPulse 2.2s ease-in-out infinite}
+    .logo-title{margin-top:22px;font-size:clamp(18px,3vw,28px);font-weight:900;letter-spacing:5px;text-transform:uppercase}
+    .logo-sub{margin-top:9px;color:#a9b8cb;font-size:13px;letter-spacing:2px}
+    .logo-click{margin-top:28px;display:inline-flex;align-items:center;gap:9px;padding:12px 18px;border:1px solid rgba(255,255,255,.18);border-radius:999px;background:rgba(255,255,255,.06);color:#eef6ff;font-weight:800;font-size:13px;animation:clickPulse 1.7s ease-in-out infinite}
+    .finish .logo-click{background:rgba(255,211,90,.10);border-color:rgba(255,211,90,.35)}
+    @keyframes logoOrbit{to{transform:rotate(360deg)}}@keyframes spinBg{to{transform:rotate(-360deg)}}@keyframes logoFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}@keyframes logoPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.025)}}@keyframes clickPulse{0%,100%{box-shadow:0 0 0 rgba(72,215,255,0)}50%{box-shadow:0 0 30px rgba(72,215,255,.18)}}
 
-
-/* ===== V4 VIDEO OVERLAY ===== */
-#winnerVideoStage{
-  display:none;position:fixed;inset:0;z-index:7000;
-  background:rgba(2,5,10,.985);
-  align-items:center;justify-content:center;padding:18px;
-}
-#winnerVideoStage.show{display:flex;animation:v4In .45s ease-out}
-.v4-video-box{width:min(1180px,96vw);display:flex;flex-direction:column;gap:10px}
-.v4-video-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
-.v4-video-label{font-size:13px;font-weight:900;letter-spacing:2px;color:var(--gold);text-transform:uppercase}
-.v4-video-frame{
-  width:100%;aspect-ratio:16/9;background:#000;border-radius:18px;
-  overflow:hidden;border:1px solid #263953;
-  box-shadow:0 0 90px rgba(72,215,255,.18);
-}
-.v4-video-frame iframe,.v4-video-frame video{width:100%;height:100%;display:block;border:0}
-.v4-info{text-align:center;color:#eef6ff}
-.v4-info strong{display:block;font-size:clamp(21px,3.5vw,36px)}
-.v4-info span{display:block;color:#91a4bb;margin-top:4px}
-.v4-note{display:none;text-align:center;color:#b9c9da;font-size:12px}
-.v4-note.show{display:block}
-.v4-play{display:none;margin:0 auto}
-.v4-play.show{display:block}
-@keyframes v4In{from{opacity:0;transform:scale(.975)}to{opacity:1;transform:scale(1)}}
-
-</style>
-<script>
-(function(){
-  var tag=document.createElement("script");
-  tag.src="https://www.youtube.com/iframe_api";
-  document.head.appendChild(tag);
-})();
-</script>
+    /* ===== V5 VIDEO OVERLAY ===== */
+    #winnerVideoStage{display:none;position:fixed;inset:0;z-index:7000;background:rgba(2,5,10,.985);align-items:center;justify-content:center;padding:18px}
+    #winnerVideoStage.show{display:flex;animation:v4In .45s ease-out}
+    .v4-video-box{width:min(1180px,96vw);display:flex;flex-direction:column;gap:10px}
+    .v4-video-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
+    .v4-video-label{font-size:13px;font-weight:900;letter-spacing:2px;color:var(--gold);text-transform:uppercase}
+    .v4-video-frame{width:100%;aspect-ratio:16/9;background:#000;border-radius:18px;overflow:hidden;border:1px solid #263953;box-shadow:0 0 90px rgba(72,215,255,.18)}
+    .v4-video-frame iframe,.v4-video-frame video{width:100%;height:100%;display:block;border:0}
+    .v4-info{text-align:center;color:#eef6ff}
+    .v4-info strong{display:block;font-size:clamp(21px,3.5vw,36px)}
+    .v4-info span{display:block;color:#91a4bb;margin-top:4px}
+    .v4-note{display:none;text-align:center;color:#b9c9da;font-size:12px}
+    .v4-note.show{display:block}
+    .v4-play{display:none;margin:0 auto}
+    .v4-play.show{display:block}
+    @keyframes v4In{from{opacity:0;transform:scale(.975)}to{opacity:1;transform:scale(1)}}
+  </style>
+  <script>
+    (function(){
+      var tag=document.createElement("script");
+      tag.src="https://www.youtube.com/iframe_api";
+      document.head.appendChild(tag);
+    })();
+  </script>
 </head>
 <body>
 
@@ -153,7 +107,7 @@ tr.active{background:rgba(72,215,255,.08)}
 <div id="winnerVideoStage" aria-hidden="true">
   <div class="v4-video-box">
     <div class="v4-video-head">
-      <div class="v4-video-label">🎬 VIDEO PESERTA TERPILIH</div>
+      <div class="v4-video-label">🎬 VIDEO PESERTA TERPILIH (PUTAR SEKALI)</div>
       <button class="secondary" onclick="closeWinnerVideo()">✕ TUTUP</button>
     </div>
     <div id="winnerVideoFrame" class="v4-video-frame"></div>
@@ -167,7 +121,7 @@ tr.active{background:rgba(72,215,255,.08)}
 </div>
 
 <header>
-  <div class="brand">🎬 <span>UNDIAN</span> LOMBA VIDEO KONTEN</div>
+  <div class="brand">🎬 <span>UNDIAN</span> LOMBA VIDEO KONTEN · V5</div>
   <div class="live"><i id="liveDot" class="dot"></i><span id="liveText">Menghubungkan...</span></div>
 </header>
 
@@ -180,8 +134,8 @@ tr.active{background:rgba(72,215,255,.08)}
   <section class="card">
     <div class="top">
       <div class="kicker">Video Content Competition</div>
-      <h1>Pengundian Peserta</h1>
-      <p class="sub">Recap → Undian → Reveal → Video Utuh</p>
+      <h1>Pengundian Peserta V5</h1>
+      <p class="sub">18 pergantian otomatis · slow motion · video pemenang 1x</p>
       <div class="counter" id="counter">Siap memulai</div>
     </div>
 
@@ -220,399 +174,326 @@ tr.active{background:rgba(72,215,255,.08)}
 </main>
 
 <script>
-/*
-  ============================================================
-  KONFIGURASI
-  ============================================================
-  1. Deploy Code.gs sebagai Web App.
-  2. Salin URL Web App, contoh:
-     https://script.google.com/macros/s/XXXXXXXX/exec
-  3. URL sengaja disimpan Base64 di bawah.
-  4. Ganti GAS_URL_B64 dengan Base64 dari URL Web App Anda.
+  const GAS_URL_B64 = "aHR0cHM6Ly9zY3JpcHQuZ29vZ2xlLmNvbS9tYWNyb3Mvcy9BS2Z5Y2J4MGJOcXVzSTRXTmlkTXRscVJqZEtDMHdheTE4cXp1VFZwOTJUbFVEMXJxZzRxamFaMnBMUENOeWNiNGxuemh2NE80dy9leGVj";
+  let participants = [];
+  let current = null;
+  let timer = null;
+  let isDrawing = false;
+  let used = new Set();
+  let lastSync = null;
+  let spinCount = 0;          // V5: hitungan pergantian otomatis
+  const MAX_SPIN = 18;       // 18 pergantian otomatis
 
-  Browser dapat membuat Base64:
-  btoa("https://script.google.com/macros/s/XXXXXXXX/exec")
-*/
-const GAS_URL_B64 = "aHR0cHM6Ly9zY3JpcHQuZ29vZ2xlLmNvbS9tYWNyb3Mvcy9BS2Z5Y2J4MGJOcXVzSTRXTmlkTXRscVJqZEtDMHdheTE4cXp1VFZwOTJUbFVEMXJxZzRxamFaMnBMUENOeWNiNGxuemh2NE80dy9leGVj";
+  function decodeBase64Url(value){ try { return atob(value); } catch(e){ return ""; } }
+  const GAS_URL = decodeBase64Url(GAS_URL_B64);
 
-let participants = [];
-let current = null;
-let timer = null;
-let isDrawing = false;
-let used = new Set();
-let lastSync = null;
-
-function decodeBase64Url(value){
-  try { return atob(value); }
-  catch(e){ return ""; }
-}
-const GAS_URL = decodeBase64Url(GAS_URL_B64);
-
-function setLive(ok, text){
-  document.getElementById("liveDot").className = "dot " + (ok ? "ok" : "err");
-  document.getElementById("liveText").textContent = text;
-}
-
-function escapeHtml(v){
-  return String(v ?? "").replace(/[&<>"']/g, c => ({
-    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
-  }[c]));
-}
-
-async function loadData(){
-  if(!GAS_URL){
-    setLive(false,"URL API belum diisi");
-    document.getElementById("syncText").textContent = "URL Google Apps Script belum dikonfigurasi";
-    return;
+  function setLive(ok, text){
+    document.getElementById("liveDot").className = "dot " + (ok ? "ok" : "err");
+    document.getElementById("liveText").textContent = text;
   }
-  setLive(false,"Menghubungkan GAS...");
-  document.getElementById("syncText").textContent = "Mengambil data Google Spreadsheet...";
-  try{
-    const response = await fetch(GAS_URL + "?action=list&t=" + Date.now(), {
-      method:"GET", redirect:"follow", credentials:"omit", cache:"no-store"
-    });
-    if(!response.ok) throw new Error("HTTP " + response.status);
-    const json = await response.json();
-    if(!json.ok) throw new Error(json.error || "GAS mengembalikan error");
-
-    participants = (json.data || []).map((r,i)=>({
-      no:Number(r.no || i+1), name:String(r.name || "").trim(),
-      theme:String(r.theme || "").trim(), video:String(r.video || "").trim(),
-      row:r.row || i+2
-    })).filter(r=>r.name);
-
-    lastSync = new Date();
-    setLive(true,"LIVE • GAS TERHUBUNG");
-    document.getElementById("syncText").textContent =
-      "Sinkron terakhir: " + lastSync.toLocaleTimeString("id-ID");
-    document.getElementById("rowText").textContent = participants.length + " peserta";
-    renderTable();
-    document.getElementById("counter").textContent =
-      participants.length ? participants.length + " peserta siap diundi"
-                           : "Spreadsheet belum memiliki peserta";
-  }catch(err){
-    console.error("GAS connection error:",err);
-    setLive(false,"GAS TIDAK TERHUBUNG");
-    document.getElementById("syncText").textContent =
-      "Gagal terhubung ke Google Apps Script: " + err.message;
-  }
-}
-function renderTable(){
-  const tbody = document.getElementById("tbody");
-  if(!participants.length){
-    tbody.innerHTML = '<tr><td colspan="4" class="empty">Tidak ada peserta.</td></tr>';
-    return;
-  }
-  tbody.innerHTML = participants.map(p => `
-    <tr id="row-${p.no}" class="${current && current.no===p.no ? "active":""}">
-      <td><b>${escapeHtml(p.no)}</b></td>
-      <td>${escapeHtml(p.name)}</td>
-      <td>${escapeHtml(p.theme)}</td>
-      <td>${current && current.no===p.no ? "🏆 TERPILIH" : "—"}</td>
-    </tr>
-  `).join("");
-}
-
-function setDisplay(p){
-  document.getElementById("number").textContent = "#" + p.no;
-  document.getElementById("name").textContent = p.name;
-  document.getElementById("theme").textContent = p.theme || "—";
-}
-
-function startDraw(){
-  if(isDrawing || participants.length===0) return;
-  if(used.size >= participants.length){
-    used.clear();
-    document.getElementById("counter").textContent = "Semua peserta sudah keluar — daftar di-reset.";
+  function escapeHtml(v){
+    return String(v ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));
   }
 
-  document.getElementById("result").classList.remove("show");
-  document.getElementById("player").classList.remove("show");
-  document.getElementById("videoWrap").innerHTML = "";
-  document.getElementById("videoBtn").disabled = true;
-  document.getElementById("playBtn").disabled = true;
-  document.getElementById("stopBtn").disabled = false;
-  document.getElementById("number").classList.add("spin");
-  isDrawing = true;
+  async function loadData(){
+    if(!GAS_URL){ setLive(false,"URL API belum diisi"); document.getElementById("syncText").textContent = "URL Google Apps Script belum dikonfigurasi"; return; }
+    setLive(false,"Menghubungkan GAS...");
+    document.getElementById("syncText").textContent = "Mengambil data Google Spreadsheet...";
+    try{
+      const response = await fetch(GAS_URL + "?action=list&t=" + Date.now(), {method:"GET", redirect:"follow", credentials:"omit", cache:"no-store"});
+      if(!response.ok) throw new Error("HTTP " + response.status);
+      const json = await response.json();
+      if(!json.ok) throw new Error(json.error || "GAS mengembalikan error");
+      participants = (json.data || []).map((r,i)=>({no:Number(r.no||i+1), name:String(r.name||"").trim(), theme:String(r.theme||"").trim(), video:String(r.video||"").trim(), row:r.row||i+2})).filter(r=>r.name);
+      lastSync = new Date();
+      setLive(true,"LIVE • GAS TERHUBUNG");
+      document.getElementById("syncText").textContent = "Sinkron terakhir: " + lastSync.toLocaleTimeString("id-ID");
+      document.getElementById("rowText").textContent = participants.length + " peserta";
+      renderTable();
+      document.getElementById("counter").textContent = participants.length ? participants.length + " peserta siap diundi" : "Spreadsheet belum memiliki peserta";
+    }catch(err){
+      console.error("GAS connection error:",err);
+      setLive(false,"GAS TIDAK TERHUBUNG");
+      document.getElementById("syncText").textContent = "Gagal terhubung ke Google Apps Script: " + err.message;
+    }
+  }
 
-  // Membaca/berputar dari baris kedua sampai bawah secara acak,
-  // sehingga nomor yang berhenti adalah salah satu peserta yang belum keluar.
-  timer = setInterval(()=>{
+  function renderTable(){
+    const tbody = document.getElementById("tbody");
+    if(!participants.length){ tbody.innerHTML = '<tr><td colspan="4" class="empty">Tidak ada peserta.</td></tr>'; return; }
+    tbody.innerHTML = participants.map(p => `<tr id="row-${p.no}" class="${current && current.no===p.no ? "active":""}"><td><b>${escapeHtml(p.no)}</b></td><td>${escapeHtml(p.name)}</td><td>${escapeHtml(p.theme)}</td><td>${current && current.no===p.no ? "🏆 TERPILIH" : "—"}</td></tr>`).join("");
+  }
+
+  function setDisplay(p){
+    document.getElementById("number").textContent = "#" + p.no;
+    document.getElementById("name").textContent = p.name;
+    document.getElementById("theme").textContent = p.theme || "—";
+  }
+
+  /* ===== V5 CORE: 18 pergantian, lalu melambat & stop otomatis ===== */
+  function startDraw(){
+    if(isDrawing || participants.length===0) return;
+    if(used.size >= participants.length){
+      used.clear();
+      document.getElementById("counter").textContent = "Semua peserta sudah keluar — daftar di-reset.";
+    }
+
+    document.getElementById("result").classList.remove("show");
+    document.getElementById("player").classList.remove("show");
+    document.getElementById("videoWrap").innerHTML = "";
+    document.getElementById("videoBtn").disabled = true;
+    document.getElementById("playBtn").disabled = true;
+    document.getElementById("stopBtn").disabled = true; // stop manual dinonaktifkan, otomatis
+    document.getElementById("number").classList.add("spin");
+    isDrawing = true;
+    spinCount = 0;
+
+    // Dapatkan daftar peserta yang belum keluar
     const available = participants.filter(p=>!used.has(p.no));
-    const p = available[Math.floor(Math.random()*available.length)];
-    setDisplay(p);
-    document.getElementById("counter").textContent =
-      "Mengundi... " + available.length + " peserta tersisa";
-  }, 90);
-}
+    let lastIndex = 0;
 
-function stopDraw(){
-  if(!isDrawing) return;
-  clearInterval(timer);
-  timer = null;
-  isDrawing = false;
+    timer = setInterval(()=>{
+      // pilih acak dari available untuk efek pergantian cepat
+      const p = available[Math.floor(Math.random()*available.length)];
+      setDisplay(p);
+      spinCount++;
 
-  const available = participants.filter(p=>!used.has(p.no));
-  const winner = available[Math.floor(Math.random()*available.length)];
-  current = winner;
-  used.add(winner.no);
+      if(spinCount >= MAX_SPIN){
+        // mulai fase melambat: hentikan interval cepat, ganti ke interval lambat
+        clearInterval(timer);
+        timer = setInterval(()=>{
+          // masih tampilkan pergantian lambat
+          const slowPick = available[Math.floor(Math.random()*available.length)];
+          setDisplay(slowPick);
+          // jika sudah beberapa kali perlambatan, berhenti total
+          if(spinCount > MAX_SPIN + 8){
+            clearInterval(timer);
+            timer = null;
+            finalizeWinner(available);
+          }
+          spinCount++;
+        }, 220); // melambat
+      }
+    }, 70); // cepat
 
-  document.getElementById("number").classList.remove("spin");
-  setDisplay(winner);
-
-  document.getElementById("resultNumber").textContent = "#" + winner.no;
-  document.getElementById("resultName").textContent = winner.name;
-  document.getElementById("resultTheme").textContent = winner.theme || "—";
-  document.getElementById("result").classList.add("show");
-
-  document.getElementById("playBtn").disabled = false;
-  document.getElementById("stopBtn").disabled = true;
-  document.getElementById("videoBtn").disabled = !winner.video;
-  document.getElementById("counter").textContent =
-    "Nomor berhenti: #" + winner.no + " • " + used.size + "/" + participants.length + " sudah terpilih";
-  renderTable();
-
-  // V4: video pemenang otomatis muncul setelah efek reveal.
-  setTimeout(openWinnerVideo, 850);
-
-  // Jika ini peserta terakhir, logo tidak ditampilkan dulu.
-  // Logo akan kembali setelah video terakhir ditutup/selesai.
-}
-
-
-
-/* ===== V4 SPLASH CONTROL ===== */
-function enterApp(){
-  const overlay=document.getElementById("logoOverlay");
-  if(!overlay) return;
-  overlay.classList.add("hidden");
-  overlay.classList.remove("finish");
-  document.body.style.overflow="";
-  setTimeout(function(){
-    overlay.style.display="none";
-  },850);
-}
-
-function showFinishSplash(){
-  const overlay=document.getElementById("logoOverlay");
-  if(!overlay) return;
-  overlay.style.display="flex";
-  overlay.classList.remove("hidden");
-  overlay.classList.add("finish");
-  document.getElementById("overlayTitle").textContent="PENGUNDIAN SELESAI";
-  document.getElementById("overlaySub").textContent="Semua peserta telah terpilih";
-  document.getElementById("overlayClick").textContent="✦ KLIK UNTUK MULAI LAGI ✦";
-  document.body.style.overflow="hidden";
-}
-
-function resetCompetition(){
-  used.clear();
-  current=null;
-  isDrawing=false;
-  const overlay=document.getElementById("logoOverlay");
-  if(overlay){
-    overlay.classList.remove("finish");
-    overlay.classList.add("hidden");
-    overlay.style.display="none";
+    document.getElementById("counter").textContent = "Berputar otomatis 18x...";
   }
-  document.getElementById("overlayTitle").textContent="UNDIAN LOMBA VIDEO KONTEN";
-  document.getElementById("overlaySub").textContent="Klik layar untuk memulai";
-  document.getElementById("overlayClick").textContent="✦ KLIK UNTUK MASUK ✦";
-  document.getElementById("result").classList.remove("show");
-  document.getElementById("player").classList.remove("show");
-  document.getElementById("videoWrap").innerHTML="";
-  document.getElementById("videoBtn").disabled=true;
-  document.getElementById("number").textContent="#—";
-  document.getElementById("name").textContent="SIAP?";
-  document.getElementById("theme").textContent="Tekan PLAY untuk memulai pengundian";
-  renderTable();
-  document.body.style.overflow="";
-}
 
-function initSplash(){
-  const overlay=document.getElementById("logoOverlay");
-  if(!overlay) return;
-  overlay.addEventListener("click",function(){
-    if(overlay.classList.contains("finish")) resetCompetition();
-    else enterApp();
-  });
-  overlay.addEventListener("keydown",function(e){
-    if(e.key==="Enter" || e.key===" "){
-      e.preventDefault();
+  function finalizeWinner(available){
+    isDrawing = false;
+    const winner = available[Math.floor(Math.random()*available.length)];
+    current = winner;
+    used.add(winner.no);
+
+    document.getElementById("number").classList.remove("spin");
+    setDisplay(winner);
+
+    document.getElementById("resultNumber").textContent = "#" + winner.no;
+    document.getElementById("resultName").textContent = winner.name;
+    document.getElementById("resultTheme").textContent = winner.theme || "—";
+    document.getElementById("result").classList.add("show");
+
+    document.getElementById("playBtn").disabled = false;
+    document.getElementById("stopBtn").disabled = true;
+    document.getElementById("videoBtn").disabled = !winner.video;
+    document.getElementById("counter").textContent = "Nomor berhenti: #" + winner.no + " • " + used.size + "/" + participants.length + " sudah terpilih";
+    renderTable();
+
+    // V5: video pemenang otomatis muncul setelah reveal
+    setTimeout(openWinnerVideo, 850);
+  }
+
+  function stopDraw(){
+    // V5: stop manual tidak digunakan, tetapi tetap dipertahankan untuk fallback
+    if(!isDrawing) return;
+    clearInterval(timer);
+    timer = null;
+    isDrawing = false;
+    const available = participants.filter(p=>!used.has(p.no));
+    finalizeWinner(available);
+  }
+
+  /* ===== V4 SPLASH CONTROL ===== */
+  function enterApp(){
+    const overlay=document.getElementById("logoOverlay");
+    if(!overlay) return;
+    overlay.classList.add("hidden");
+    overlay.classList.remove("finish");
+    document.body.style.overflow="";
+    setTimeout(function(){ overlay.style.display="none"; },850);
+  }
+
+  function showFinishSplash(){
+    const overlay=document.getElementById("logoOverlay");
+    if(!overlay) return;
+    overlay.style.display="flex";
+    overlay.classList.remove("hidden");
+    overlay.classList.add("finish");
+    document.getElementById("overlayTitle").textContent="PENGUNDIAN SELESAI";
+    document.getElementById("overlaySub").textContent="Semua peserta telah terpilih";
+    document.getElementById("overlayClick").textContent="✦ KLIK UNTUK MULAI LAGI ✦";
+    document.body.style.overflow="hidden";
+  }
+
+  function resetCompetition(){
+    used.clear();
+    current=null;
+    isDrawing=false;
+    spinCount=0;
+    if(timer){clearInterval(timer); timer=null;}
+    const overlay=document.getElementById("logoOverlay");
+    if(overlay){
+      overlay.classList.remove("finish");
+      overlay.classList.add("hidden");
+      overlay.style.display="none";
+    }
+    document.getElementById("overlayTitle").textContent="UNDIAN LOMBA VIDEO KONTEN";
+    document.getElementById("overlaySub").textContent="Klik layar untuk memulai";
+    document.getElementById("overlayClick").textContent="✦ KLIK UNTUK MASUK ✦";
+    document.getElementById("result").classList.remove("show");
+    document.getElementById("player").classList.remove("show");
+    document.getElementById("videoWrap").innerHTML="";
+    document.getElementById("videoBtn").disabled=true;
+    document.getElementById("number").textContent="#—";
+    document.getElementById("name").textContent="SIAP?";
+    document.getElementById("theme").textContent="Tekan PLAY untuk memulai pengundian";
+    renderTable();
+    document.body.style.overflow="";
+  }
+
+  function initSplash(){
+    const overlay=document.getElementById("logoOverlay");
+    if(!overlay) return;
+    overlay.addEventListener("click",function(){
       if(overlay.classList.contains("finish")) resetCompetition();
       else enterApp();
-    }
-  });
-  // Pastikan splash benar-benar aktif saat halaman pertama dibuka.
-  overlay.style.display="flex";
-  overlay.classList.remove("hidden");
-  overlay.classList.remove("finish");
-  document.body.style.overflow="hidden";
-}
-
-let ytPlayer=null;
-let ytApiReady=false;
-let pendingWinnerVideoId=null;
-
-window.onYouTubeIframeAPIReady=function(){
-  ytApiReady=true;
-  if(pendingWinnerVideoId) createV4YouTubePlayer(pendingWinnerVideoId);
-};
-
-function youtubeId(url){
-  const s=String(url||"").trim();
-  const patterns=[
-    /youtu\.be\/([^?&#/]+)/i,
-    /youtube\.com\/watch\?[^#]*v=([^?&#/]+)/i,
-    /youtube\.com\/shorts\/([^?&#/]+)/i,
-    /youtube\.com\/embed\/([^?&#/]+)/i,
-    /youtube-nocookie\.com\/embed\/([^?&#/]+)/i
-  ];
-  for(const re of patterns){
-    const m=s.match(re);
-    if(m) return m[1];
+    });
+    overlay.addEventListener("keydown",function(e){
+      if(e.key==="Enter" || e.key===" "){
+        e.preventDefault();
+        if(overlay.classList.contains("finish")) resetCompetition();
+        else enterApp();
+      }
+    });
+    overlay.style.display="flex";
+    overlay.classList.remove("hidden");
+    overlay.classList.remove("finish");
+    document.body.style.overflow="hidden";
   }
-  return null;
-}
 
-function openWinnerVideo(){
-  if(!current || !current.video) return;
+  /* ===== V5 YOUTUBE PLAYER (autoplay 1x, stop setelah selesai) ===== */
+  let ytPlayer=null;
+  let ytApiReady=false;
+  let pendingWinnerVideoId=null;
 
-  const stage=document.getElementById("winnerVideoStage");
-  const frame=document.getElementById("winnerVideoFrame");
-  const note=document.getElementById("v4Note");
-  const playBtn=document.getElementById("v4PlayButton");
+  window.onYouTubeIframeAPIReady=function(){
+    ytApiReady=true;
+    if(pendingWinnerVideoId) createV4YouTubePlayer(pendingWinnerVideoId);
+  };
 
-  document.getElementById("winnerVideoName").textContent=current.name||"—";
-  document.getElementById("winnerVideoTheme").textContent=current.theme||"—";
-  note.classList.remove("show");
-  playBtn.classList.remove("show");
-  stage.classList.add("show");
-  stage.setAttribute("aria-hidden","false");
-  document.body.style.overflow="hidden";
+  function youtubeId(url){
+    const s=String(url||"").trim();
+    const patterns=[/youtu\.be\/([^?&#/]+)/i,/youtube\.com\/watch\?[^#]*v=([^?&#/]+)/i,/youtube\.com\/shorts\/([^?&#/]+)/i,/youtube\.com\/embed\/([^?&#/]+)/i,/youtube-nocookie\.com\/embed\/([^?&#/]+)/i];
+    for(const re of patterns){ const m=s.match(re); if(m) return m[1]; }
+    return null;
+  }
 
-  const id=youtubeId(current.video);
+  function openWinnerVideo(){
+    if(!current || !current.video) return;
+    const stage=document.getElementById("winnerVideoStage");
+    const frame=document.getElementById("winnerVideoFrame");
+    const note=document.getElementById("v4Note");
+    const playBtn=document.getElementById("v4PlayButton");
+    document.getElementById("winnerVideoName").textContent=current.name||"—";
+    document.getElementById("winnerVideoTheme").textContent=current.theme||"—";
+    note.classList.remove("show");
+    playBtn.classList.remove("show");
+    stage.classList.add("show");
+    stage.setAttribute("aria-hidden","false");
+    document.body.style.overflow="hidden";
 
-  if(id){
-    pendingWinnerVideoId=id;
-    if(ytApiReady){
-      createV4YouTubePlayer(id);
-    }else{
-      frame.innerHTML='<div style="height:100%;display:grid;place-items:center;color:#9aa9bd">Memuat video...</div>';
+    const id=youtubeId(current.video);
+    if(id){
+      pendingWinnerVideoId=id;
+      if(ytApiReady){ createV4YouTubePlayer(id); }
+      else{ frame.innerHTML='<div style="height:100%;display:grid;place-items:center;color:#9aa9bd">Memuat video...</div>'; }
+    } else {
+      frame.innerHTML='<video id="v4DirectVideo" src="'+escapeHtml(current.video)+'" controls autoplay playsinline></video>';
+      const dv=document.getElementById("v4DirectVideo");
+      dv.addEventListener("ended",function(){
+        // video selesai -> jika semua peserta sudah terpilih, close + splash
+        if(participants.length && used.size>=participants.length) closeWinnerVideo();
+      });
     }
-  }else{
-    frame.innerHTML='<video id="v4DirectVideo" src="'+escapeHtml(current.video)+'" controls autoplay playsinline></video>';
-    const dv=document.getElementById("v4DirectVideo");
-    dv.addEventListener("ended",function(){
-      if(participants.length && used.size>=participants.length) closeWinnerVideo();
+  }
+
+  function createV4YouTubePlayer(id){
+    const frame=document.getElementById("winnerVideoFrame");
+    if(ytPlayer){ try{ytPlayer.destroy();}catch(e){} ytPlayer=null; }
+    frame.innerHTML='<div id="v4YTPlayer"></div>';
+    ytPlayer=new YT.Player("v4YTPlayer",{
+      width:"100%", height:"100%", videoId:id,
+      playerVars:{autoplay:1, controls:1, playsinline:1, rel:0, enablejsapi:1},
+      events:{
+        onReady:function(event){
+          event.target.mute(); event.target.playVideo();
+          setTimeout(()=>{ try{ event.target.unMute(); event.target.setVolume(100);}catch(e){} },700);
+        },
+        onStateChange:function(event){
+          if(event.data===YT.PlayerState.PLAYING){
+            document.getElementById("v4Note").classList.remove("show");
+            document.getElementById("v4PlayButton").classList.remove("show");
+          }
+          if(event.data===YT.PlayerState.ENDED){
+            // V5: video berakhir, otomatis berhenti & close jika semua peserta sudah selesai
+            if(participants.length && used.size>=participants.length){
+              setTimeout(closeWinnerVideo,500);
+            }
+          }
+        },
+        onAutoplayBlocked:function(){
+          const note=document.getElementById("v4Note");
+          note.textContent="Autoplay diblokir browser. Tekan PLAY VIDEO untuk memulai.";
+          note.classList.add("show");
+          document.getElementById("v4PlayButton").classList.add("show");
+        },
+        onError:function(){
+          document.getElementById("v4Note").textContent="Video YouTube tidak dapat diputar/di-embed.";
+          document.getElementById("v4Note").classList.add("show");
+        }
+      }
     });
   }
-}
 
-function createV4YouTubePlayer(id){
-  const frame=document.getElementById("winnerVideoFrame");
-  if(ytPlayer){
-    try{ytPlayer.destroy();}catch(e){}
-    ytPlayer=null;
+  function manualPlayWinner(){
+    if(ytPlayer){ try{ ytPlayer.unMute(); ytPlayer.setVolume(100); ytPlayer.playVideo(); }catch(e){} }
+    const video=document.querySelector("#winnerVideoFrame video");
+    if(video){ video.muted=false; video.play().catch(()=>{}); }
+    document.getElementById("v4PlayButton").classList.remove("show");
+    document.getElementById("v4Note").classList.remove("show");
   }
 
-  frame.innerHTML='<div id="v4YTPlayer"></div>';
-
-  ytPlayer=new YT.Player("v4YTPlayer",{
-    width:"100%",
-    height:"100%",
-    videoId:id,
-    playerVars:{
-      autoplay:1,
-      controls:1,
-      playsinline:1,
-      rel:0,
-      enablejsapi:1
-    },
-    events:{
-      onReady:function(event){
-        /*
-         * V4 starts muted first. This makes autoplay much more reliable
-         * across Chrome/Edge. We then try to restore sound.
-         */
-        event.target.mute();
-        event.target.playVideo();
-        setTimeout(function(){
-          try{
-            event.target.unMute();
-            event.target.setVolume(100);
-          }catch(e){}
-        },700);
-      },
-      onStateChange:function(event){
-        if(event.data===YT.PlayerState.PLAYING){
-          document.getElementById("v4Note").classList.remove("show");
-          document.getElementById("v4PlayButton").classList.remove("show");
-        }
-        if(event.data===YT.PlayerState.ENDED &&
-           participants.length && used.size>=participants.length){
-          setTimeout(closeWinnerVideo,500);
-        }
-      },
-      onAutoplayBlocked:function(){
-        const note=document.getElementById("v4Note");
-        note.textContent="Autoplay diblokir browser. Tekan PLAY VIDEO untuk memulai.";
-        note.classList.add("show");
-        document.getElementById("v4PlayButton").classList.add("show");
-      },
-      onError:function(){
-        const note=document.getElementById("v4Note");
-        note.textContent="Video YouTube tidak dapat diputar/di-embed.";
-        note.classList.add("show");
-      }
+  function closeWinnerVideo(){
+    document.getElementById("winnerVideoStage").classList.remove("show");
+    document.getElementById("winnerVideoStage").setAttribute("aria-hidden","true");
+    document.body.style.overflow="";
+    if(ytPlayer){ try{ytPlayer.stopVideo();ytPlayer.destroy();}catch(e){} ytPlayer=null; }
+    document.getElementById("winnerVideoFrame").innerHTML="";
+    pendingWinnerVideoId=null;
+    // V5: jika semua peserta sudah terpilih, tampilkan splash selesai
+    if(participants.length && used.size >= participants.length){
+      setTimeout(showFinishSplash,350);
     }
+  }
+
+  function showWinnerVideo(){ openWinnerVideo(); }
+
+  document.addEventListener("DOMContentLoaded",()=>{
+    initSplash();
+    loadData();
+    setInterval(loadData,15000);
+    document.addEventListener("visibilitychange",()=>{ if(!document.hidden) loadData(); });
   });
-}
-
-function manualPlayWinner(){
-  if(ytPlayer){
-    try{
-      ytPlayer.unMute();
-      ytPlayer.setVolume(100);
-      ytPlayer.playVideo();
-    }catch(e){}
-  }
-  const video=document.querySelector("#winnerVideoFrame video");
-  if(video){
-    video.muted=false;
-    video.play().catch(()=>{});
-  }
-  document.getElementById("v4PlayButton").classList.remove("show");
-  document.getElementById("v4Note").classList.remove("show");
-}
-
-function closeWinnerVideo(){
-  document.getElementById("winnerVideoStage").classList.remove("show");
-  document.getElementById("winnerVideoStage").setAttribute("aria-hidden","true");
-  document.body.style.overflow="";
-  if(ytPlayer){
-    try{ytPlayer.stopVideo();ytPlayer.destroy();}catch(e){}
-    ytPlayer=null;
-  }
-  document.getElementById("winnerVideoFrame").innerHTML="";
-  pendingWinnerVideoId=null;
-
-  // Peserta terakhir: setelah video ditutup, tampilkan splash selesai.
-  if(participants.length && used.size >= participants.length){
-    setTimeout(showFinishSplash,350);
-  }
-}
-
-function showWinnerVideo(){
-  openWinnerVideo();
-}
-
-document.addEventListener("DOMContentLoaded",()=>{
-  initSplash();
-  loadData();
-  setInterval(loadData,15000);
-  document.addEventListener("visibilitychange",()=>{ if(!document.hidden) loadData(); });
-});
 </script>
 </body>
 </html>
