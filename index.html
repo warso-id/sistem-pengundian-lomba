@@ -375,12 +375,80 @@ function stopDraw(){
   // V4: video pemenang otomatis muncul setelah efek reveal.
   setTimeout(openWinnerVideo, 850);
 
-  // Jika seluruh peserta sudah terundi, tampilkan kembali logo fullscreen.
-  if(used.size >= participants.length){
-    setTimeout(finishCompetition, 2600);
-  }
+  // Jika ini peserta terakhir, logo tidak ditampilkan dulu.
+  // Logo akan kembali setelah video terakhir ditutup/selesai.
 }
 
+
+
+/* ===== V4 SPLASH CONTROL ===== */
+function enterApp(){
+  const overlay=document.getElementById("logoOverlay");
+  if(!overlay) return;
+  overlay.classList.add("hidden");
+  overlay.classList.remove("finish");
+  document.body.style.overflow="";
+  setTimeout(function(){
+    overlay.style.display="none";
+  },850);
+}
+
+function showFinishSplash(){
+  const overlay=document.getElementById("logoOverlay");
+  if(!overlay) return;
+  overlay.style.display="flex";
+  overlay.classList.remove("hidden");
+  overlay.classList.add("finish");
+  document.getElementById("overlayTitle").textContent="PENGUNDIAN SELESAI";
+  document.getElementById("overlaySub").textContent="Semua peserta telah terpilih";
+  document.getElementById("overlayClick").textContent="✦ KLIK UNTUK MULAI LAGI ✦";
+  document.body.style.overflow="hidden";
+}
+
+function resetCompetition(){
+  used.clear();
+  current=null;
+  isDrawing=false;
+  const overlay=document.getElementById("logoOverlay");
+  if(overlay){
+    overlay.classList.remove("finish");
+    overlay.classList.add("hidden");
+    overlay.style.display="none";
+  }
+  document.getElementById("overlayTitle").textContent="UNDIAN LOMBA VIDEO KONTEN";
+  document.getElementById("overlaySub").textContent="Klik layar untuk memulai";
+  document.getElementById("overlayClick").textContent="✦ KLIK UNTUK MASUK ✦";
+  document.getElementById("result").classList.remove("show");
+  document.getElementById("player").classList.remove("show");
+  document.getElementById("videoWrap").innerHTML="";
+  document.getElementById("videoBtn").disabled=true;
+  document.getElementById("number").textContent="#—";
+  document.getElementById("name").textContent="SIAP?";
+  document.getElementById("theme").textContent="Tekan PLAY untuk memulai pengundian";
+  renderTable();
+  document.body.style.overflow="";
+}
+
+function initSplash(){
+  const overlay=document.getElementById("logoOverlay");
+  if(!overlay) return;
+  overlay.addEventListener("click",function(){
+    if(overlay.classList.contains("finish")) resetCompetition();
+    else enterApp();
+  });
+  overlay.addEventListener("keydown",function(e){
+    if(e.key==="Enter" || e.key===" "){
+      e.preventDefault();
+      if(overlay.classList.contains("finish")) resetCompetition();
+      else enterApp();
+    }
+  });
+  // Pastikan splash benar-benar aktif saat halaman pertama dibuka.
+  overlay.style.display="flex";
+  overlay.classList.remove("hidden");
+  overlay.classList.remove("finish");
+  document.body.style.overflow="hidden";
+}
 
 let ytPlayer=null;
 let ytApiReady=false;
@@ -433,7 +501,11 @@ function openWinnerVideo(){
       frame.innerHTML='<div style="height:100%;display:grid;place-items:center;color:#9aa9bd">Memuat video...</div>';
     }
   }else{
-    frame.innerHTML='<video src="'+escapeHtml(current.video)+'" controls autoplay playsinline></video>';
+    frame.innerHTML='<video id="v4DirectVideo" src="'+escapeHtml(current.video)+'" controls autoplay playsinline></video>';
+    const dv=document.getElementById("v4DirectVideo");
+    dv.addEventListener("ended",function(){
+      if(participants.length && used.size>=participants.length) closeWinnerVideo();
+    });
   }
 }
 
@@ -476,6 +548,10 @@ function createV4YouTubePlayer(id){
         if(event.data===YT.PlayerState.PLAYING){
           document.getElementById("v4Note").classList.remove("show");
           document.getElementById("v4PlayButton").classList.remove("show");
+        }
+        if(event.data===YT.PlayerState.ENDED &&
+           participants.length && used.size>=participants.length){
+          setTimeout(closeWinnerVideo,500);
         }
       },
       onAutoplayBlocked:function(){
@@ -520,6 +596,11 @@ function closeWinnerVideo(){
   }
   document.getElementById("winnerVideoFrame").innerHTML="";
   pendingWinnerVideoId=null;
+
+  // Peserta terakhir: setelah video ditutup, tampilkan splash selesai.
+  if(participants.length && used.size >= participants.length){
+    setTimeout(showFinishSplash,350);
+  }
 }
 
 function showWinnerVideo(){
@@ -527,6 +608,7 @@ function showWinnerVideo(){
 }
 
 document.addEventListener("DOMContentLoaded",()=>{
+  initSplash();
   loadData();
   setInterval(loadData,15000);
   document.addEventListener("visibilitychange",()=>{ if(!document.hidden) loadData(); });
