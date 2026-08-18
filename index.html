@@ -104,7 +104,24 @@ tr.active{background:rgba(72,215,255,.08)}
 .result.show .winner{animation:winnerText .8s .15s both cubic-bezier(.17,.89,.32,1.28)}
 @keyframes winnerText{from{opacity:0;transform:translateY(22px);filter:blur(8px)}to{opacity:1;transform:none;filter:none}}
 
+<style>
+#winnerVideoStage{display:none;position:fixed;inset:0;z-index:5000;background:rgba(2,5,10,.97);align-items:center;justify-content:center;padding:20px}
+#winnerVideoStage.show{display:flex;animation:videoIn .5s ease-out}
+#winnerVideoBox{width:min(1180px,96vw);display:flex;flex-direction:column;gap:12px}
+#winnerVideoFrame{width:100%;aspect-ratio:16/9;background:#000;border-radius:18px;overflow:hidden;border:1px solid #263953;box-shadow:0 0 80px rgba(72,215,255,.18)}
+#winnerVideoFrame iframe,#winnerVideoFrame video{width:100%;height:100%;border:0;display:block}
+#winnerVideoHead{display:flex;justify-content:space-between;align-items:center;color:#ffd35a;font-weight:900;letter-spacing:2px}
+#winnerVideoInfo{text-align:center;color:#dbe8f6}
+#winnerVideoInfo strong{font-size:clamp(20px,3vw,32px)}
+#winnerVideoInfo small{display:block;color:#93a5bb;margin-top:4px}
+#autoplayNote{display:none;text-align:center;color:#b8c8da;font-size:12px}
+#autoplayNote.show{display:block}
+@keyframes videoIn{from{opacity:0;transform:scale(.97)}to{opacity:1;transform:scale(1)}}
 </style>
+</style>
+<script>
+(function(){var s=document.createElement("script");s.src="https://www.youtube.com/iframe_api";document.head.appendChild(s);})();
+</script>
 </head>
 <body>
 
@@ -116,7 +133,13 @@ tr.active{background:rgba(72,215,255,.08)}
     <div class="logo-click" id="overlayClick">✦ KLIK UNTUK MASUK ✦</div>
   </div>
 </div>
-
+<div id="winnerVideoStage">
+<div id="winnerVideoBox">
+<div id="winnerVideoHead"><span>🎬 VIDEO PESERTA TERPILIH</span><button class="secondary" onclick="closeWinnerVideo()">✕ TUTUP</button></div>
+<div id="winnerVideoFrame"></div>
+<div id="autoplayNote">Autoplay diblokir browser. Tekan tombol PLAY pada video.</div>
+<div id="winnerVideoInfo"><strong id="winnerVideoName">—</strong><small id="winnerVideoTheme">—</small></div>
+</div></div>
 <header>
   <div class="brand">🎬 <span>UNDIAN</span> LOMBA VIDEO KONTEN</div>
   <div class="live"><i id="liveDot" class="dot"></i><span id="liveText">Menghubungkan...</span></div>
@@ -323,95 +346,58 @@ function stopDraw(){
     "Nomor berhenti: #" + winner.no + " • " + used.size + "/" + participants.length + " sudah terpilih";
   renderTable();
 
+  setTimeout(openWinnerVideo, 900);
+
   // Jika seluruh peserta sudah terundi, tampilkan kembali logo fullscreen.
   if(used.size >= participants.length){
     setTimeout(finishCompetition, 2600);
   }
 }
 
+let ytPlayer=null,ytApiReady=false,pendingVideoId=null;
+window.onYouTubeIframeAPIReady=function(){ytApiReady=true;if(pendingVideoId)createWinnerPlayer(pendingVideoId);};
+
 function youtubeId(url){
-  const patterns = [
-    /youtu\.be\/([^?&#/]+)/i,
-    /youtube\.com\/watch\?v=([^?&#/]+)/i,
-    /youtube\.com\/embed\/([^?&#/]+)/i,
-    /youtube\.com\/shorts\/([^?&#/]+)/i
-  ];
-  for(const re of patterns){
-    const m = String(url).match(re);
-    if(m) return m[1];
-  }
+  const s=String(url||"").trim();
+  const p=[/youtu\.be\/([^?&#/]+)/i,/youtube\.com\/watch\?[^#]*v=([^?&#/]+)/i,/youtube\.com\/shorts\/([^?&#/]+)/i,/youtube\.com\/embed\/([^?&#/]+)/i];
+  for(const r of p){const m=s.match(r);if(m)return m[1];}
   return null;
 }
 
-function showWinnerVideo(){
-  if(!current || !current.video) return;
-  const wrap = document.getElementById("videoWrap");
-  const id = youtubeId(current.video);
-  if(id){
-    wrap.innerHTML = `<iframe
-      src="https://www.youtube.com/embed/${encodeURIComponent(id)}?autoplay=1&rel=0"
-      allow="autoplay; encrypted-media; picture-in-picture"
-      allowfullscreen></iframe>`;
-  }else{
-    wrap.innerHTML = `<video src="${escapeHtml(current.video)}" controls autoplay playsinline></video>`;
-  }
-  document.getElementById("player").classList.add("show");
-  document.getElementById("player").scrollIntoView({behavior:"smooth",block:"center"});
+function openWinnerVideo(){
+  if(!current||!current.video)return;
+  const stage=document.getElementById("winnerVideoStage");
+  document.getElementById("winnerVideoName").textContent=current.name||"—";
+  document.getElementById("winnerVideoTheme").textContent=current.theme||"—";
+  document.getElementById("autoplayNote").classList.remove("show");
+  stage.classList.add("show");document.body.style.overflow="hidden";
+  const id=youtubeId(current.video);
+  if(id){pendingVideoId=id;if(ytApiReady)createWinnerPlayer(id);}
+  else document.getElementById("winnerVideoFrame").innerHTML='<video src="'+escapeHtml(current.video)+'" controls autoplay playsinline></video>';
 }
 
-
-const logoOverlay = document.getElementById("logoOverlay");
-const overlayTitle = document.getElementById("overlayTitle");
-const overlaySub = document.getElementById("overlaySub");
-const overlayClick = document.getElementById("overlayClick");
-let appOpened = false;
-
-function openLogoOverlay(){
-  appOpened = false;
-  logoOverlay.classList.remove("hidden","finish");
-  overlayTitle.textContent = "UNDIAN LOMBA VIDEO KONTEN";
-  overlaySub.textContent = "Klik layar untuk memulai";
-  overlayClick.textContent = "✦ KLIK UNTUK MASUK ✦";
+function createWinnerPlayer(id){
+  const frame=document.getElementById("winnerVideoFrame");
+  if(ytPlayer){try{ytPlayer.destroy();}catch(e){}}
+  frame.innerHTML='<div id="ytWinnerPlayer"></div>';
+  ytPlayer=new YT.Player("ytWinnerPlayer",{
+    width:"100%",height:"100%",videoId:id,
+    playerVars:{autoplay:1,controls:1,playsinline:1,rel:0,modestbranding:1,origin:window.location.origin},
+    events:{
+      onReady:function(e){e.target.playVideo();},
+      onAutoplayBlocked:function(){document.getElementById("autoplayNote").classList.add("show");}
+    }
+  });
 }
 
-function closeLogoOverlay(){
-  appOpened = true;
-  logoOverlay.classList.add("hidden");
+function closeWinnerVideo(){
+  document.getElementById("winnerVideoStage").classList.remove("show");
+  document.body.style.overflow="";
+  if(ytPlayer){try{ytPlayer.stopVideo();ytPlayer.destroy();}catch(e){}ytPlayer=null;}
+  document.getElementById("winnerVideoFrame").innerHTML="";
+  pendingVideoId=null;
 }
-
-function finishCompetition(){
-  logoOverlay.classList.remove("hidden");
-  logoOverlay.classList.add("finish");
-  overlayTitle.textContent = "PENGUNDIAN SELESAI";
-  overlaySub.textContent = "Terima kasih • Sampai jumpa";
-  overlayClick.textContent = "↻ KLIK UNTUK MULAI LAGI";
-}
-
-logoOverlay.addEventListener("click",()=>{
-  if(appOpened){
-    // Setelah selesai, klik logo mengembalikan daftar undian ke awal.
-    used.clear();
-    current = null;
-    document.getElementById("result").classList.remove("show");
-    document.getElementById("player").classList.remove("show");
-    document.getElementById("videoWrap").innerHTML = "";
-    document.getElementById("videoBtn").disabled = true;
-    document.getElementById("number").textContent = "—";
-    document.getElementById("name").textContent = "Tekan PLAY untuk memulai";
-    document.getElementById("theme").textContent = "Data diambil langsung dari Google Spreadsheet";
-    document.getElementById("counter").textContent = "Siap memulai";
-    renderTable();
-    openLogoOverlay();
-  }else{
-    closeLogoOverlay();
-  }
-});
-logoOverlay.addEventListener("keydown",(e)=>{
-  if(e.key==="Enter" || e.key===" "){
-    e.preventDefault();
-    if(appOpened) openLogoOverlay(); else closeLogoOverlay();
-  }
-});
+function showWinnerVideo(){openWinnerVideo();}
 
 document.addEventListener("DOMContentLoaded",()=>{
   loadData();
