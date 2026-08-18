@@ -11,7 +11,7 @@ body{margin:0;background:radial-gradient(circle at 50% -10%,#17345a 0,#070b14 48
 header{padding:18px 24px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,.08);background:rgba(7,11,20,.72);backdrop-filter:blur(10px);position:sticky;top:0;z-index:20}
 .brand{font-size:20px;font-weight:800;letter-spacing:.3px}.brand span{color:var(--accent)}
 .live{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted)}
-.dot{width:10px;height:10px;border-radius:50%;background:#777}.dot.ok{background:var(--ok);box-shadow:0 0 12px var(--ok)}.dot.err{background:var(--danger)}
+.dot{width:10px;height:10px;border-radius:50%;background:#777}.dot.ok{background:var(--ok);box-shadow:0 0 12px var(--ok);animation:livePulse 1.5s ease-in-out infinite}.dot.err{background:var(--danger)}
 main{max-width:1200px;margin:auto;padding:28px 18px 60px}
 .status{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:18px;color:var(--muted);font-size:13px}
 .card{background:linear-gradient(180deg,rgba(20,31,49,.94),rgba(11,18,30,.96));border:1px solid var(--line);border-radius:22px;box-shadow:0 20px 70px rgba(0,0,0,.28);overflow:hidden}
@@ -23,7 +23,7 @@ h1{font-size:clamp(28px,5vw,54px);margin:8px 0 4px}
 .draw{min-height:260px;display:flex;align-items:center;justify-content:center;flex-direction:column;padding:25px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
 .number{font-size:clamp(72px,15vw,170px);line-height:.9;font-weight:950;letter-spacing:-8px;text-shadow:0 0 40px rgba(72,215,255,.15);transition:transform .15s}
 .number.spin{animation:tick .09s infinite alternate}
-@keyframes tick{to{transform:translateY(-5px) scale(1.02)}}
+@keyframes tick{to{transform:translateY(-5px) scale(1.02)}}@keyframes livePulse{0%,100%{opacity:1}50%{opacity:.45}}
 .name{font-size:clamp(22px,4vw,40px);font-weight:800;margin-top:18px;text-align:center}
 .theme{color:var(--muted);margin-top:7px;text-align:center}
 .actions{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;padding:24px}
@@ -184,7 +184,7 @@ tr.active{background:rgba(72,215,255,.08)}
   Browser dapat membuat Base64:
   btoa("https://script.google.com/macros/s/XXXXXXXX/exec")
 */
-const GAS_URL_B64 = "https://script.google.com/macros/s/AKfycbx0bNqusI4WNidMtlqRjdKC0way18qzuTVp92TlUD1rqg4qjaZ2pLPCNycb4lnzhv4O4w/exec";
+const GAS_URL_B64 = "aHR0cHM6Ly9zY3JpcHQuZ29vZ2xlLmNvbS9tYWNyb3Mvcy9BS2Z5Y2J4MGJOcXVzSTRXTmlkTXRscVJqZEtDMHdheTE4cXp1VFZwOTJUbFVEMXJxZzRxamFaMnBMUENOeWNiNGxuemh2NE80dy9leGVj";
 
 let participants = [];
 let current = null;
@@ -213,41 +213,41 @@ function escapeHtml(v){
 async function loadData(){
   if(!GAS_URL){
     setLive(false,"URL API belum diisi");
-    document.getElementById("syncText").textContent = "Isi GAS_URL_B64 pada index.html";
+    document.getElementById("syncText").textContent = "URL Google Apps Script belum dikonfigurasi";
     return;
   }
-  setLive(false,"Sinkronisasi...");
+  setLive(false,"Menghubungkan GAS...");
+  document.getElementById("syncText").textContent = "Mengambil data Google Spreadsheet...";
   try{
     const response = await fetch(GAS_URL + "?action=list&t=" + Date.now(), {
-      method:"GET",
-      cache:"no-store"
+      method:"GET", redirect:"follow", credentials:"omit", cache:"no-store"
     });
     if(!response.ok) throw new Error("HTTP " + response.status);
     const json = await response.json();
-    if(!json.ok) throw new Error(json.error || "API error");
+    if(!json.ok) throw new Error(json.error || "GAS mengembalikan error");
 
     participants = (json.data || []).map((r,i)=>({
-      no: Number(r.no || i+1),
-      name: r.name || "",
-      theme: r.theme || "",
-      video: r.video || "",
-      row: r.row || i+2
+      no:Number(r.no || i+1), name:String(r.name || "").trim(),
+      theme:String(r.theme || "").trim(), video:String(r.video || "").trim(),
+      row:r.row || i+2
     })).filter(r=>r.name);
 
     lastSync = new Date();
-    setLive(true,"LIVE • tersinkron");
+    setLive(true,"LIVE • GAS TERHUBUNG");
     document.getElementById("syncText").textContent =
       "Sinkron terakhir: " + lastSync.toLocaleTimeString("id-ID");
-    document.getElementById("rowText").textContent =
-      participants.length + " peserta";
+    document.getElementById("rowText").textContent = participants.length + " peserta";
     renderTable();
+    document.getElementById("counter").textContent =
+      participants.length ? participants.length + " peserta siap diundi"
+                           : "Spreadsheet belum memiliki peserta";
   }catch(err){
-    console.error(err);
-    setLive(false,"OFFLINE / gagal sinkron");
-    document.getElementById("syncText").textContent = "Gagal sinkron: " + err.message;
+    console.error("GAS connection error:",err);
+    setLive(false,"GAS TIDAK TERHUBUNG");
+    document.getElementById("syncText").textContent =
+      "Gagal terhubung ke Google Apps Script: " + err.message;
   }
 }
-
 function renderTable(){
   const tbody = document.getElementById("tbody");
   if(!participants.length){
@@ -415,8 +415,8 @@ logoOverlay.addEventListener("keydown",(e)=>{
 
 document.addEventListener("DOMContentLoaded",()=>{
   loadData();
-  // Live sync: cek perubahan spreadsheet setiap 15 detik.
   setInterval(loadData,15000);
+  document.addEventListener("visibilitychange",()=>{ if(!document.hidden) loadData(); });
 });
 </script>
 </body>
